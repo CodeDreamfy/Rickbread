@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>面包机</title>
+    <script>
+      //var w = window.innerWidth;
+      //console.log(w)
+      var dpr = window.devicePixelRatio;
+      var vpMeta = document.createElement("meta");
+      var meta = document.querySelector('meta[name="viewport"]');
+      if(meta){
+        meta.setAttribute('content', 'initial-scale=' + 1/dpr + ',user-scalable=no');
+      }else {
+        vpMeta.setAttribute('name', 'viewport');
+        vpMeta.setAttribute('content', 'initial-scale=' + 1/dpr + ',user-scalable=no');
+        document.documentElement.firstElementChild.appendChild(vpMeta);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
