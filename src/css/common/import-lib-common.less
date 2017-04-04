@@ -104,4 +104,53 @@ html { font-size: 13.33vw;}
   width: 100vw;
   height: 100vh;
   position: relative;
+	background: #f5f5f5;
+}
+.block-common {
+	background: #fff;
+	margin-top: 16px;
+	&:first-child {
+		margin-top: 0;
+	}
+	.block-common-title {
+		height: 90px; line-height: 90px; padding-left: 20px;
+		font-size: 28px; color: #8894ab;
+	}
+	.block-common-content {
+		box-shadow: 0 1px 2px 0 #dadada;
+		overflow: hidden;
+	}
+	.block-row {
+		display: flex;
+		width: 100%;
+		border-top: 1px solid #ebebeb;
+		&>div {
+			flex: 1;
+			height: 182px;
+			color: #666; font-size: 26px;
+			&:first-child {
+				box-shadow: 1px 0 0 0 #ebebeb;
+			}
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			& > i.icon.iconfont {
+				font-size: 60px; color: #bcb28e; margin-right: 30px;
+			}
+		}
+	}
+	.block-row-center {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 26px;
+		color: #333;
+		height: 300px;
+		& > div {
+			flex: 0 0 256px;
+			display: flex; flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+	}
 }

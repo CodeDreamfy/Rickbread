@@ -1,0 +1,147 @@
+
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1491144234678'); /* IE9*/
+  src: url('iconfont.eot?t=1491144234678#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1491144234678') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1491144234678') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1491144234678#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-carryout:before { content: "\e601"; }
+
+.icon-bake:before { content: "\e602"; }
+
+.icon-barbecue-click:before { content: "\e603"; }
+
+.icon-babaoRice:before { content: "\e604"; }
+
+.icon-cornBread:before { content: "\e605"; }
+
+.icon-barbecue:before { content: "\e606"; }
+
+.icon-cornBread-click:before { content: "\e607"; }
+
+.icon-customAndFace:before { content: "\e608"; }
+
+.icon-dough:before { content: "\e609"; }
+
+.icon-device-normal:before { content: "\e60a"; }
+
+.icon-dough-click:before { content: "\e60b"; }
+
+.icon-countdown:before { content: "\e60c"; }
+
+.icon-european:before { content: "\e60d"; }
+
+.icon-european-click:before { content: "\e60e"; }
+
+.icon-fancyjam:before { content: "\e60f"; }
+
+.icon-european-dessert-click:before { content: "\e610"; }
+
+.icon-fancyjam-click:before { content: "\e611"; }
+
+.icon-european-dessert:before { content: "\e612"; }
+
+.icon-fast:before { content: "\e613"; }
+
+.icon-fast-click:before { content: "\e614"; }
+
+.icon-ferment-click:before { content: "\e615"; }
+
+.icon-ferment:before { content: "\e616"; }
+
+.icon-flossing:before { content: "\e617"; }
+
+.icon-flossing-click:before { content: "\e618"; }
+
+.icon-french:before { content: "\e619"; }
+
+.icon-french-click:before { content: "\e61a"; }
+
+.icon-lowRiceWine:before { content: "\e61b"; }
+
+.icon-IMIX:before { content: "\e61c"; }
+
+.icon-lowRiceWine-click:before { content: "\e61d"; }
+
+.icon-mysteriousRiceBread:before { content: "\e61e"; }
+
+.icon-mysteriousRiceBread-click:before { content: "\e61f"; }
+
+.icon-noGlutenBread:before { content: "\e620"; }
+
+.icon-noGlutenBread-click:before { content: "\e621"; }
+
+.icon-noodles:before { content: "\e622"; }
+
+.icon-nomenu:before { content: "\e623"; }
+
+.icon-organicGrainsBread:before { content: "\e624"; }
+
+.icon-organicGrainsBread-click:before { content: "\e625"; }
+
+.icon-purpleRiceBread-click:before { content: "\e626"; }
+
+.icon-purpleRiceBread:before { content: "\e627"; }
+
+.icon-reservation:before { content: "\e628"; }
+
+.icon-recipe:before { content: "\e629"; }
+
+.icon-rickcake-click:before { content: "\e62a"; }
+
+.icon-rickcake:before { content: "\e62b"; }
+
+.icon-selfProgramming:before { content: "\e62c"; }
+
+.icon-roasted:before { content: "\e62d"; }
+
+.icon-ricebread:before { content: "\e62e"; }
+
+.icon-start:before { content: "\e62f"; }
+
+.icon-standby:before { content: "\e630"; }
+
+.icon-ricebread-click:before { content: "\e631"; }
+
+.icon-stirFlick:before { content: "\e632"; }
+
+.icon-stirFlick-click:before { content: "\e633"; }
+
+.icon-stir:before { content: "\e634"; }
+
+.icon-stop:before { content: "\e635"; }
+
+.icon-thaw:before { content: "\e636"; }
+
+.icon-timeout:before { content: "\e637"; }
+
+.icon-wekeUp:before { content: "\e638"; }
+
+.icon-westernCake:before { content: "\e639"; }
+
+.icon-thaw-click:before { content: "\e63a"; }
+
+.icon-windBread-click:before { content: "\e63b"; }
+
+.icon-westernCake-click:before { content: "\e63c"; }
+
+.icon-windBread:before { content: "\e63d"; }
+
+.icon-yogurt:before { content: "\e63e"; }
+
+.icon-yogurt-click:before { content: "\e63f"; }
+
+.icon-andface:before { content: "\e640"; }
+
+.icon-andface-click:before { content: "\e641"; }
+
