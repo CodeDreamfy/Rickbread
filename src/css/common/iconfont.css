@@ -1,10 +1,10 @@
-@font-face {
-	font-family: "iconfont";
-  src: url('../../assets/iconfont.eot?t=1491144234678'); /* IE9*/
-  src: url('../../assets/iconfont.eot?t=1491144234678#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('../../assets/iconfont.woff?t=1491144234678') format('woff'), /* chrome, firefox */
-  url('../../assets/iconfont.ttf?t=1491144234678') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('../../assets/iconfont.svg?t=1491144234678#iconfont') format('svg'); /* iOS 4.1- */
+
+@font-face {font-family: "iconfont";
+  src: url('./font/iconfont.eot?t=1491449574715'); /* IE9*/
+  src: url('./font/iconfont.eot?t=1491449574715#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('./font/iconfont.woff?t=1491449574715') format('woff'), /* chrome, firefox */
+  url('./font/iconfont.ttf?t=1491449574715') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('./font/iconfont.svg?t=1491449574715#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -144,4 +144,12 @@
 .icon-andface:before { content: "\e640"; }
 
 .icon-andface-click:before { content: "\e641"; }
+
+.icon-menu:before { content: "\e642"; }
+
+.icon-index:before { content: "\e643"; }
+
+.icon-wifi:before { content: "\e644"; }
+
+.icon-tips:before { content: "\e645"; }
 

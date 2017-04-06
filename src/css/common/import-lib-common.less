@@ -95,7 +95,14 @@ th {
   text-align: left;
 }
 
-a { text-decoration: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-user-select: none !important; -webkit-tap-highlight-color: transparent; color: #000;}
+a { 
+	text-decoration: none; 
+	-webkit-user-select: none; 
+	-webkit-touch-callout: none; 
+	-webkit-user-select: none !important; 
+	-webkit-tap-highlight-color: transparent; 
+	color: inherit;
+}
 em,i { font-style: normal;}
 
 html { font-size: 13.33vw;}
@@ -109,6 +116,7 @@ html { font-size: 13.33vw;}
 .block-common {
 	background: #fff;
 	margin-top: 16px;
+	box-shadow: 0 1px 3px 1px #e2e2e2;
 	&:first-child {
 		margin-top: 0;
 	}
@@ -117,25 +125,26 @@ html { font-size: 13.33vw;}
 		font-size: 28px; color: #8894ab;
 	}
 	.block-common-content {
-		box-shadow: 0 1px 2px 0 #dadada;
+		// border-top: 1px solid #dadada;
 		overflow: hidden;
 	}
 	.block-row {
 		display: flex;
 		width: 100%;
-		border-top: 1px solid #ebebeb;
+		border-top: 1px solid #dadada;
 		&>div {
 			flex: 1;
 			height: 182px;
 			color: #666; font-size: 26px;
 			&:first-child {
-				box-shadow: 1px 0 0 0 #ebebeb;
+				border-right: 1px solid #dadada;
 			}
 			display: flex;
-			justify-content: center;
+			justify-content: left;
 			align-items: center;
-			& > i.icon.iconfont {
-				font-size: 60px; color: #bcb28e; margin-right: 30px;
+			& > i {
+				flex: 0 0 50%;
+				text-align: right;
 			}
 		}
 	}
@@ -145,12 +154,20 @@ html { font-size: 13.33vw;}
 		align-items: center;
 		font-size: 26px;
 		color: #333;
-		height: 300px;
+		height: 270px;
+		border-top: 1px solid #dadada;
 		& > div {
 			flex: 0 0 256px;
 			display: flex; flex-direction: column;
 			justify-content: center;
 			align-items: center;
 		}
+	}
+}
+
+i.icon.iconfont {
+	font-size: 60px; color: #bcb28e; margin-right: 30px;
+	&.off {
+		color: #ebebeb
 	}
 }

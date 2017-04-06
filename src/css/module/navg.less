@@ -14,24 +14,17 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    span.icon {
-      flex: 0 0 60px;
-    }
-    span.text {
-      font-size: 24px;
+    color: #8894ab;
+    span { line-height: 1; font-size: 24px;}
+    span.nav-icon {
+      i { font-size: 44px;}
+      padding-bottom: 8px;
     }
     &:first-child {
       box-shadow: 1px 0 0 0 #ebebeb;
-      .icon {
-        background: url(../../assets/index-btn-icon.png) no-repeat center center;
-        background-size: 42px 45px;
-      }
     }
-    &:last-child {
-      .icon {
-        background: url(../../assets/menu-btn-icon.png) no-repeat center center;
-        background-size: 42px 43px;
-      }
+    &.active {
+      color: #109eff;
     }
   }
 }
