@@ -1,0 +1,129 @@
+.reservation {
+  background: #fff;
+  height: 100%; overflow: hidden;
+  .reserva-head {
+    height: 472px;
+    background: url(../../assets/setting-head-bg.png) no-repeat 0 0 #f5f5f5;
+    background-size: 100% 100%;
+    display: flex; justify-content: center; align-items: center;
+    .round-show-wrap {
+      display: flex; justify-content: center; align-items: center;
+      width: 336px; height: 336px; position: relative;
+      .round-rotate {
+        position: absolute; width: 100%; height: 100%;
+        z-index: 1;
+        top: 0; left: 0;
+        border-radius: 50%; 
+        background: url(../../assets/round-bg.png) no-repeat 0 0; 
+        background-size: 100% 100%;
+        .round-type {
+          position: absolute; top: 20px; right: 20px; 
+          width: 76px; height: 76px; line-height: 76px;
+          text-align: center; font-size: 42px; border-radius: 50%;
+          background: #fff; box-shadow: 0 7px 10px 0  rgba(109,109,109,.08);
+          i { 
+            font-size: 42px;  color: #109eff;  
+          }
+        }
+        &.key-animate {
+          animation: rotateRound 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+        }
+        @keyframes rotateRound {
+          from { transform: rotate(0deg) translate3d(0,0,0);}
+          to { transform: rotate(360deg) translate3d(0,0,0);}
+        }
+      }
+      .round-showtime {
+        flex: 0 0 292px; height: 292px;
+        animation: showAnimate 2.8s ease-in-out infinite alternate;
+        border-radius: 50%; background: rgba(255,255,255,1);
+        box-shadow: 0 7px 10px 0  rgba(109,109,109,.08);
+        display: flex; flex-direction: column; 
+        justify-content: center; align-items: center;
+        .time-txt {
+          font-size: 70px; color: #333; font-weight: 600;
+        }
+        .type-txt {
+          font-size: 28px; color: #666; margin-top: 21px;
+        }
+        @keyframes showAnimate {
+          0%,100% { flex: 0 0 292px; height: 292px; background: rgba(255,255,255,1);}
+          50% { flex: 0 0 240px; height: 240px; background: rgba(255,255,255,.2);}
+        }
+      }
+    }
+  }
+  .reser-block {
+    box-shadow: 0 -7px 10px 0 rgba(109,109,109,.08);
+    height: calc(100vh - 4.72rem);
+    .setting-com {
+      height: 164px; display: flex;
+      align-items: center; justify-content: flex-start;
+      .valtxt { 
+        flex: 0 0 90px; padding: 0 4px;
+        text-align: center; font-size: 26px; color: #666;
+        // &:last-child { text-align: left;}
+        text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+      }
+      .slidebar-wrap {
+        width: calc(100vw - 1.8rem);
+      }
+    }
+    .reser-btnwrap {
+      border-top: 1px solid #ebebeb;
+      height: 374px; display: flex;
+      justify-content: center; align-items: center;
+      .btnwrap {
+        display: flex; flex-direction: column; justify-content: space-between;
+        align-items: center;
+        i {
+          font-size: 60px; text-align: center;
+          height: 110px; line-height: 110px;
+          color: #40b1ff;
+        }
+        p { margin-top: 28px; font-size: 28px; color: #333; }
+      }
+      .start-btn {
+        i { font-size: 110px; }
+        margin: 0 106px;
+      }
+    }
+  }
+}
+
+.ui-range {
+  position: relative; display: flex;
+  justify-content: center; align-items: center;
+  input[type=range] {
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 100%;
+    
+  }
+  input[type=range]:focus {
+    outline: none; background: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: #ebebeb;
+    border-radius: 4px;
+    border: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    border: 1px solid #2497E3;
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    background: #109EFF;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -16.5px;
+  }
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ebebeb;
+  }
+  
+
+}
