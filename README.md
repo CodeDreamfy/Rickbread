@@ -53,6 +53,10 @@ npm run build --report
    |- App.vue //入口文件
    |- main.js //入口js
 ```
+# prefix
+1. `input["type=range"]`自定义的时候使用了`-webkit-appearance: none;`点击的时候总是有背景色在闪烁，后来查明是`-webkit-tap-highlight-color: transparent;`搞得鬼
+2. `height`和`line-height`的值一样，但是转换出来的rem不一样，很奇怪，最后只能把`line-height`设置成1了
+
 
 ## icon-ClassName
 | 中文名 | className|

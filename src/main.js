@@ -7,7 +7,6 @@ import App from './App'
 import router from './router'
 import store from './store/vuex'
 
-
 //是否显示生产环境备注
 Vue.config.productionTip = false
 
