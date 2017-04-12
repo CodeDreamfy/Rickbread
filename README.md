@@ -34,7 +34,7 @@ npm run build --report
 * 双重下划线的原因是，块本身可以用连字符
 
 
-## vue-resource
+## vue-resource / axios
 项目中如果遇到需要请求接口，我们采用了vue的一个插件：
 [vue-resource](https://github.com/pagekit/vue-resource)
 

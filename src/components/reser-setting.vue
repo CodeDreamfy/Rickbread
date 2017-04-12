@@ -1,16 +1,19 @@
 <template>
   <div class="reser-setting">
-    <mask-layer >
-      <div class="setting-container-layer" slot="container" >
-        <div class="setting-layer-titile">预约设置1</div>
+    <transition name="fade">
+      <div class="mask-layer-wrapper" v-show="container != 0"  @click="hideLayer($event)">
+        <div class="setting-container-layer" v-show="container == 1">
+          <div class="setting-layer-titile">预约设置</div>
+          <div class="setting-layer-container">
+            <mt-picker :slots="slots" class="mtpicker-custom"></mt-picker>
+          </div>
+        </div>
+        <div class="setting-container-layer" v-show="container == 2">
+          <div class="setting-layer-titile">配方设置</div>
+        </div>
       </div>
-      <div class="setting-container-layer"  >
-        <div class="setting-layer-titile">预约设置2</div>
-      </div>
-      <div class="setting-container-layer"  >
-        <div class="setting-layer-titile">预约设置3</div>
-      </div>
-    </mask-layer>
+    </transition>
+    
     <div class="reserva-head">
       <div class="round-show-wrap">
         <div class="round-rotate key-animate">
@@ -48,7 +51,7 @@
           <i class="iconfont icon-start"></i>
           <p>启动</p>
         </a>
-        <a href="javascript:;" class="formula-btn btnwrap">
+        <a href="javascript:;" class="formula-btn btnwrap" @touchend="showLayer(2)">
           <i class="iconfont icon-customAndFace"></i>
           <p>配方</p>
         </a>
@@ -58,25 +61,57 @@
 </template>
 
 <script>
-  import maskLayer from '@/components/mask-layer'
+  // import timePick from '@/components/time-pick'
+
   export default {
     data () {
       return {
-        container: null
+        container: 1,
+        slots: [
+          {
+            flex: '0 0 auto',
+            values: ['1','2','3','4','5','6','7','8'],
+            className: 'slot1',
+            textAlign: 'right'
+          },{
+            flex: '0 0 10em',
+            divider: true,
+            content: '小时',
+            className: 'divider1',
+            textAlign: 'left'
+          },{
+            flex: '0 0 auto',
+            values: ['1','2','3','4','5','6','7','8'],
+            className: 'slot2',
+            textAlign: 'left'
+          },{
+            flex: '0 0 10em',
+            divider: true,
+            content: '分钟',
+            className: 'divider2',
+            textAlign: 'left'
+          }
+        ]
       }
     },
     methods: {
+      computedArr (min, max) {
+        var buffArray = [];
+        for(var i= min; buffArray.push(i++) <= max;);
+        return buffArray
+      },
       showLayer (num) {
         this.container = num;
-        console.log(this.isState)
       },
-      changeMasklayer () {
-        console.log("assa")
-        //this.container = true;
+      hideLayer ($) {
+        var elem =  $.target.className;
+        if(elem == 'mask-layer-wrapper'){
+          this.container = 0;
+        }
       }
     },
     components: {
-      maskLayer
+      
     }
   }
 </script>
