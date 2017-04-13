@@ -6,20 +6,20 @@
     </div>
     <div class="picker-date"  @touchstart="touchstart($event,'hoursBuff')" @touchmove="touchmove($event,'hoursBuff')" @touchend="touchend($event,'hoursBuff')">
       <ul class="time-hour-wrap left">
-        <li class="diff">6</li>
+        <li>6</li>
         <li class="adjacent">7</li>
         <li class="current">12</li>
         <li class="adjacent">9</li>
-        <li class="diff">10</li>
+        <li>10</li>
       </ul>
     </div>
     <div class="picker-date">
       <ul class="time-minute-wrap right">
-        <li class="diff">4</li>
+        <li>4</li>
         <li class="adjacent">5</li>
         <li class="current">58</li>
         <li class="adjacent">7</li>
-        <li class="diff">8</li>
+        <li>8</li>
       </ul>
     </div>
     

@@ -23,37 +23,34 @@
   .picker-date {
     flex: 0 0 50%; position: relative;
     overflow: hidden;
+    // overflow-y: scroll;
     &::before, &::after{
       content:'';
       position: absolute; left: 0;
-      height: 20%; width: 100%;
-      background: linear-gradient(#fff, transparent );
-      background: -webkit-linear-gradient(#fff, transparent);
+      height: 14%; width: 100%;
     }
     &::before {
       top: 0;
+      // background: linear-gradient(to bottom, white,transparent );
+      background: linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
     }
     &::after{
       bottom: 0;
-      background: linear-gradient(transparent, #fff );
-      background: -webkit-linear-gradient(transparent, #fff);
+      // background: linear-gradient(to bottom, transparent, white );
+      background: linear-gradient(bottom, rgba(255,255,255,1), rgba(255,255,255,0));
     }
     ul {
-      height: 100%;
       // transform: translate3d(0,-70px,0);
       &>::-webkit-scrollbar {
-        // display: none;
+        display: none;
       }
       li {
         font-size: 32px; display: flex; color: #b7e2ff;
-        
+        height: 40px; line-height: 40px;
+        color: #b7e2ff;
         &.adjacent {
           height: 58px; line-height: 58px;
           color: #109eff;
-        }
-        &.diff {
-          height: 40px; line-height: 40px;
-          color: #b7e2ff;
         }
         &.current {
           height: 96px; line-height: 96px; color: #333;
