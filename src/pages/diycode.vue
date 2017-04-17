@@ -4,23 +4,26 @@
         <div class="setting-container-layer" v-if="buffData.type==3">
           <div class="setting-layer-titile">{{buffData.name}}</div>
           <div class="setting-layer-container">
-            <time-pick></time-pick>
+            <mt-picker class="mtpicker-custom" :slots="slots" @change="onValuesChange" :itemHeight="68"></mt-picker>
+            <div class="ui-btn primary"><a href="javascript:;" class="btn">启动</a></div>
           </div>
         </div>
         <div class="setting-container-layer" v-else="typeof(buffData.type) == 'number' ">
           <div class="setting-layer-titile">{{buffData.name}}</div>
           <div class="setting-layer-container">
-            <div class="setting-color setting-com" v-show="buffData.type == 1">
+            <div class="setting-color setting-com" v-if="buffData.type == 1">
               <span class="valtxt">浅</span>
               <div class="slidebar-wrap ui-range">
-                <input type="range" class="" :min="colorPick.min" :step="colorPick.step"    v-model="vals[buffData.index]" :max='colorPick.max' >
+                <input type="range" class="" :min="colorPick.min" :step="colorPick.step"  v-model="vals[buffData.index]" :max='colorPick.max' >
+                <span class="movetips">{{valSpan}}</span>
               </div>
               <span class="valtxt">深</span>
             </div>
-             <div class="setting-weight setting-com" v-show="buffData.type == 2">
+             <div class="setting-weight setting-com" v-else="buffData.type == 2">
               <span class="valtxt">0</span>
               <div class="slidebar-wrap ui-range">
                 <input type="range" class="" :min="timePick.min" :step="timePick.step" :max='timePick.max' v-model="vals[buffData.index]" >
+                <span class="movetips">{{valSpan}}</span>
               </div>
               <span class="valtxt">30</span>
             </div>
@@ -58,7 +61,7 @@
         <span class="value">{{vals[6]}}分钟</span>
       </div>
       <div class="diycode-btnwrap btnwrap-common">
-        <a href="javascript:;" class="btnwrap" @touchend.self.prevent="showLayer('预约',3,'yuyue')">
+        <a href="javascript:;" class="btnwrap" @touchend="showLayer('预约',3,'yuyue')">
           <i class="iconfont icon-reservation"></i>
           <p>预约</p>
         </a>
@@ -72,7 +75,7 @@
 </template>
 
 <script>
-  import timePick from '@/components/time-pick'
+  // import timePick from '@/components/time-pick'
   export default {
     data () {
       return {
@@ -95,23 +98,73 @@
     },
     watch: {
       vals () {
-        
+        let c = document.querySelector('.ui-range .movetips');
+        let pickArr = [this.colorPick, this.timePick];
+        let pick = pickArr[this.buffData.type-1];
+        console.log(this.valSpan,pick.min,pick.max)
+        let z = ((this.valSpan-pick.min)/(pick.max-pick.min)) * 100 + '%'
+        // console.log("change 了",z); //valSpan
+        c.style.left = z;
       }
     },
     computed: {
-      
+      valSpan () {
+        return this.vals[this.buffData.index]
+      },
+      slots () {
+        let hourTimeArr = this.computedArr(0,48);
+        let minTimeArr = this.computedArr(0,59);
+        return [
+          {
+            flex: '0 0 10%',
+            values: hourTimeArr,
+            className: 'slot1',
+            textAlign: 'center'
+          },{
+            divider: true,
+            content:'小时',
+            className: 'divider-hour'
+          }, {
+            flex: '0 0 10%',
+            values: minTimeArr,
+            className: 'solt2',
+            textAlign: 'center'
+          }, {
+            divider: true,
+            content: '分钟',
+            className: 'divider-min'
+          }
+        ]
+      }
     },
     methods: {
+      movetips () {
+        let c = document.querySelector('.ui-range .movetips');
+        let pickArr = [this.colorPick, this.timePick];
+        let pick = pickArr[this.buffData.type-1];
+        console.log(this.valSpan,pick.min,pick.max)
+        let z = ((this.valSpan-pick.min)/(pick.max-pick.min)) * 100 + '%'
+        // console.log("change 了",z); //valSpan
+        c.style.left = z;
+        // console.log(e.target.nextElementSibling, elem.style.left)
+
+      },
+      onValuesChange (picker, values) {
+        // console.log(picker,picker._self.$children)
+      },
       showLayer (name,type,index) {
-       this.buffData = {
-         name: name,
-         type: type,
-         index: index
-       }
-       this.container = true;
-       if(type == 3) {
-         return true;
-       }
+        this.buffData = {
+          name: name,
+          type: type,
+          index: index
+        }
+        this.container = true;
+        this.movetips()
+        if(type == 3) {
+          return true;
+        }
+
+        // console.log(type)
       },
       hideLayer ($) {
         var elem =  $.target.className;
@@ -121,27 +174,27 @@
         }
         // console.log(this.)
       },
-      inputChange (e) {
-        // console.log(e.target.value)
-        this.valueData[this.cookieData.indexOf(this.buffData.buffname)] = e.target.value
-      //  this.valueData[index]
+      computedArr (min, max) {
+        var buffArray = [];
+        for(var i= min; buffArray.push(i++) <= max;);
+        return buffArray
       }
     },
     filters: {
       filterColor (val) {
         var c;
-        console.log('filterColor - c',c)
-        switch(val){
+        // console.log('filterColor - val', val)
+        switch(+val){
           case 1: c = '浅色'; break;
           case 2: c = '中色'; break;
           case 3: c = '深色'; break;
         }
-        console.log('filterColor',val,c);
+        // console.log('filterColor',val,c);
         return c
       }
     },
     components: {
-      timePick
+      // timePick
     }
   }
 </script>

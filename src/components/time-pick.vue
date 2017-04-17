@@ -4,24 +4,7 @@
       <span>小时</span>
       <span>分钟</span>
     </div>
-    <div class="picker-date"  @touchstart="touchstart($event,'hoursBuff')" @touchmove="touchmove($event,'hoursBuff')" @touchend="touchend($event,'hoursBuff')">
-      <ul class="time-hour-wrap left">
-        <li>6</li>
-        <li class="adjacent">7</li>
-        <li class="current">12</li>
-        <li class="adjacent">9</li>
-        <li>10</li>
-      </ul>
-    </div>
-    <div class="picker-date">
-      <ul class="time-minute-wrap right">
-        <li>4</li>
-        <li class="adjacent">5</li>
-        <li class="current">58</li>
-        <li class="adjacent">7</li>
-        <li>8</li>
-      </ul>
-    </div>
+    
     
   </div>
 </template>

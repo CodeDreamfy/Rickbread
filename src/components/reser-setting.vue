@@ -5,8 +5,9 @@
         <div class="setting-container-layer" v-show="container == 1">
           <div class="setting-layer-titile">预约设置</div>
           <div class="setting-layer-container">
-            <!--<mt-picker :slots="slots" class="mtpicker-custom"></mt-picker>-->
-            <time-pick></time-pick>
+            <!--<time-pick></time-pick>-->
+            <mt-picker class="mtpicker-custom" :slots="slots" @change="onValuesChange" :itemHeight="68"></mt-picker>
+            <div class="ui-btn primary"><a href="javascript:;" class="btn">启动</a></div>
           </div>
         </div>
         <div class="setting-container-layer" v-show="container == 2">
@@ -53,14 +54,16 @@
       <div class="setting-color setting-com">
         <span class="valtxt">浅</span>
         <div class="slidebar-wrap ui-range">
-          <input type="range" class=""  min='1' step="1" value="2" max='3'>
+          <input type="range" class="" min='1' step="1" v-model="colorVal" max='3'>
+          <span class="movetips movetips-color">{{colorVal}}</span>
         </div>
         <span class="valtxt">深</span>
       </div>
       <div class="setting-weight setting-com">
         <span class="valtxt">500</span>
         <div class="slidebar-wrap ui-range">
-          <input type="range" class="" min="500" step="50" max='1000' value="750">
+          <input type="range" class="" min="500" step="50" max='1000' v-model="wegihtVal">
+          <span class="movetips movetips-weight">{{wegihtVal}}</span>
         </div>
         <span class="valtxt">1000</span>
       </div>
@@ -83,35 +86,61 @@
 </template>
 
 <script>
-  import timePick from '@/components/time-pick'
+  //import timePick from '@/components/time-pick'
 
   export default {
     data () {
       return {
-        container: 1,
-        slots: [
+        container: 0,
+        buffData: {},
+        colorVal: 2,
+        wegihtVal: 750
+      }
+    },
+    watch: {
+      colorVal () {
+        let c = document.querySelector('.ui-range .movetips-color');
+        let z = ((this.colorVal-1)/2) * 100 + '%'
+        // console.log("change 了",z); //valSpan
+        c.style.left = z;
+      },
+      wegihtVal () {
+        let c = document.querySelector('.ui-range .movetips-weight');
+
+        let z = ((this.wegihtVal-500)/500) * 100 + '%'
+        // console.log("change 了",z); //valSpan
+        c.style.left = z;
+      }
+    },
+    computed: {
+      spanColorVal () {
+        return this.colorVal
+      },
+      spanWegihtVal () {
+        return this.weightVal
+      },
+      slots () {
+        let hourTimeArr = this.computedArr(0,48);
+        let minTimeArr = this.computedArr(0,59);
+        return [
           {
-            flex: '0 0 1',
-            values: ['1','2','3','4','5','6','7','8'],
+            flex: '0 0 10%',
+            values: hourTimeArr,
             className: 'slot1',
-            textAlign: 'right'
+            textAlign: 'center'
           },{
-            flex: '0 0 10%',
             divider: true,
-            content: '小时',
-            className: 'divider1',
-            textAlign: 'left'
-          },{
-            flex: '0 0 1',
-            values: ['1','2','3','4','5','6','7','8'],
-            className: 'slot2',
-            textAlign: 'left'
-          },{
+            content:'小时',
+            className: 'divider-hour'
+          }, {
             flex: '0 0 10%',
+            values: minTimeArr,
+            className: 'solt2',
+            textAlign: 'center'
+          }, {
             divider: true,
             content: '分钟',
-            className: 'divider2',
-            textAlign: 'left'
+            className: 'divider-min'
           }
         ]
       }
@@ -130,10 +159,13 @@
         if(elem.indexOf('reser-layer')){
           this.container = 0;
         }
+      },
+      onValuesChange (picker, value) {
+        // console.log(picker, value)
       }
     },
     components: {
-      timePick
+      //timePick
     }
   }
 </script>
