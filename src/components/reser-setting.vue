@@ -12,7 +12,7 @@
         </div>
         <div class="setting-container-layer" v-show="container == 2">
           <div class="setting-layer-titile">配方设置</div>
-          <div class="setting-layer-container">
+          <div class="setting-layer-container peifang">
             <table class="table-list" >
               <tr>
                 <td>鸡蛋（轻微搅拌）3个</td>
