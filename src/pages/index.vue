@@ -1,6 +1,5 @@
 <template>
   <div class="intro">
-		234
 		<introPage v-show="this.$store.state.introState == 1"></introPage>
 		<menuPage v-show="this.$store.state.introState == 2"></menuPage>
     <navigation></navigation>

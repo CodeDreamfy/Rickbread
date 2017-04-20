@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-  123
     <div class="warning-tips" v-show="warnTips">
       <div class="tipstext">
         <i class="iconfont icon-tips"></i>{{warningState.msg}}
