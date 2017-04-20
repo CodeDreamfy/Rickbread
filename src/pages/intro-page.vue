@@ -27,7 +27,7 @@
 			<div class="block-common-content">
 				<div class="block-row-center">
 					<div class="device-wrap">
-						<a href="javascript:;" class="start-btn">
+						<a href="javascript:;" class="start-btn" @touchstart="startUp">
 							<i class="iconfont icon-start device-btn"></i>
 						</a>
 						<p>启动</p>
@@ -45,5 +45,18 @@
 </template>
 
 <script>
-  
+  export default {
+		methods: {
+			startUp () {
+				if(this.warningState){
+					this.$store.commit('warnTipShow', true)
+				}
+			}
+		},
+		computed: {
+			warningState () {
+				return this.$store.state.warningState.state;
+			}
+		}
+	}
 </script>
