@@ -12,8 +12,8 @@ import 'mint-ui/lib/style.css';
 Vue.component(Picker.name, Picker);
 
 //是否显示生产环境备注
-Vue.config.productionTip = true
-Vue.config.debug = true
+Vue.config.productionTip = false;
+
 
 /* eslint-disable no-new */
 new Vue({

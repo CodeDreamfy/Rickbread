@@ -10,7 +10,8 @@ const store = new Vuex.Store({
     warningState: {
       state: true,
       msg: '请先配置菜单！'
-    }
+    },
+    isAppWork:'false'
   },
   mutations: {
     changeIntroState (state, num) {
@@ -21,6 +22,9 @@ const store = new Vuex.Store({
     },
     warnTipShow (state, st) {
       state.warnTips = st
+    },
+    changeIsAppWork (state, st) {
+      state.isAppWork = st;
     }
   }
 })

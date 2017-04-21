@@ -3,10 +3,11 @@ import Router from 'vue-router'
 import index from '@/pages/index'
 import reserSetting from '@/components/reser-setting'
 import diyCode from '@/pages/diycode'
+import filter from './filter'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   // mode: 'history',
   routes: [
     {
@@ -26,3 +27,6 @@ export default new Router({
     }
   ]
 })
+
+filter(router)
+export default router
