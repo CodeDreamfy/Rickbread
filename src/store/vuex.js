@@ -1,17 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import indexModule from './index.module'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
     introState: 1,
-    warnTips: false,
+    warnTips: false, //显示隐藏
     warningState: {
-      state: true,
+      state: false, //警告是否存在
       msg: '请先配置菜单！'
     },
-    isAppWork:'false'
+    isAppWork:'false',
+    netWork: true, //有无网络
+    workState: null, //待机状态
   },
   mutations: {
     changeIntroState (state, num) {
@@ -25,7 +28,16 @@ const store = new Vuex.Store({
     },
     changeIsAppWork (state, st) {
       state.isAppWork = st;
+    },
+    netWorkChange (state, status) {
+      state.netWork = status
     }
+  },
+  actions: {
+    
+  },
+  modules: {
+    indexModule
   }
 })
 
