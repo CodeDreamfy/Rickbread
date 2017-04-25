@@ -4,7 +4,7 @@
 			<div class="block-common-title">设备状态</div>
 			<div class="block-common-content">
 				<div class="block-row">
-					<div class="online-status"><i class="icon iconfont icon-wifi"></i>在线</div>
+					<div :class="this.$store.state.network ? 'online-status' : 'off online-status' "><i class="icon iconfont icon-wifi"></i>{{this.$store.state.netWork ? '在线' : '离线'}}</div>
 					<div class="standBy-status"><i class="icon iconfont icon-cornBread-click"></i>待机</div>
 				</div>
 				<div class="block-row">
@@ -46,6 +46,18 @@
 
 <script>
   export default {
+		data () {
+			return {
+				workState: [
+					'待机','完成','搅拌1',
+					'醒面1','搅拌2','醒面2',
+					'搅拌3','醒面3','搅拌4',
+					'发酵1','发酵2','烘烤',
+					'保温','预约中','烘烤+搅拌',
+					'搅拌+醒面','发酵3'
+					]
+			}
+		},
 		methods: {
 			startUp () {
 				if(this.warningState){

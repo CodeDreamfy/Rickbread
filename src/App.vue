@@ -45,29 +45,34 @@ export default {
     //   this.$store.commit('warnTipShow',true)
     // }
     let _this = this;
-    OJS.bindAppReady(function(){
+    // OJS.bindAppReady(function(){
       // _this.loadingState = true;
       // _this.loadText = '正在与设备进入连接';
-      _this.$store.commit({
-        type: 'loadingChange',
-        flag: true,
-        txt: '正在与设备进行连接'
-      })
-      OJS.app.toast("ojs app ready");
+      // _this.$store.commit({
+      //   type: 'loadingChange',
+      //   flag: true,
+      //   txt: '正在与设备进行连接'
+      // })
+      // OJS.app.toast("ojs app ready");
       
-      OJS.bindReady(function(){
-        // _this.readOjs = true;
-        OJS.app.toast("ojs ojs ready");
-        console.dir(OJS.device.getSensorData())
-        //有无网络
-        _this.$store.commit({
-          type: 'netWorkChange',
-          status: (!!OJS.device.onlineStatus)
-        })
-        //数据状态更新
+      // OJS.bindReady(function(){
+      //   // _this.readOjs = true;
+      //   OJS.app.toast("ojs ojs ready");
+      //   console.dir(OJS.device.getSensorData())
+      //   //有无网络
+      //   _this.$store.commit({
+      //     type: 'netWorkChange',
+      //     status: (!!OJS.device.onlineStatus)
+      //   })
+      //   //数据状态更新
+      //   OJS.device.bindPushData({
+      //     'deviceStatusChange': (data)=>{
+      //       console.info('deviceStatusChange', data)
+      //     }
+      //   })
 
-      })
-    })
+      // })
+    // })
     
   }
 }

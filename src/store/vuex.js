@@ -13,7 +13,7 @@ const store = new Vuex.Store({
       msg: '请先配置菜单！'
     },
     isAppWork:'false',
-    netWork: true, //有无网络
+    netWork: 0, //有无网络
     workState: null, //待机状态
   },
   mutations: {
@@ -31,10 +31,13 @@ const store = new Vuex.Store({
     },
     netWorkChange (state, status) {
       state.netWork = status
+    },
+    bindApp (state, obj) {
+
     }
   },
   actions: {
-    
+
   },
   modules: {
     indexModule

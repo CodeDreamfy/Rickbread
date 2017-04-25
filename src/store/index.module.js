@@ -1,7 +1,7 @@
 const indexModule = {
   state: {
     loading: {
-      loadingState: true, //遮罩
+      loadingState: false, //遮罩
       loadText: '正在载入APP环境'
     }
   },
