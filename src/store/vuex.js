@@ -31,13 +31,10 @@ const store = new Vuex.Store({
     },
     netWorkChange (state, status) {
       state.netWork = status
-    },
-    bindApp (state, obj) {
-
     }
   },
   actions: {
-
+    
   },
   modules: {
     indexModule

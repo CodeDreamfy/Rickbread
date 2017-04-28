@@ -33,7 +33,9 @@ function configRouter(store){
     routes
   })
 
-  // router
+  router.beforeEach((to, from, next) => {
+    next()
+  })
 
 
   return router

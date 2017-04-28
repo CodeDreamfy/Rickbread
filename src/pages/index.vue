@@ -24,9 +24,9 @@
 		beforeMount () {
 			let _this = this;
 			// console.log(this.$store.state.isAppWork)
-			OJS.bindAppReady(()=>{
-				_this.$store.commit('changeIsAppWork', true)
-    	})
+			// OJS.bindAppReady(()=>{
+			// 	_this.$store.commit('changeIsAppWork', true)
+    	// })
 		}
 	}
 </script>
