@@ -126,4 +126,9 @@ npm run build --report
 | 紫米面包 点击 | purpleRiceBread-click |
 | 自编程序 | selfProgramming |
 | 自定义和面 | customAndFace |
+| 保温 | insulation |
+| 烘烤＋搅拌 | bakeStir |
+| 烘烤＋搅拌 点击 | bakeStir-click |
+| 搅拌＋醒面 | stirWakeUp |
+| 搅拌＋醒面 点击 | stirWakeUp-click |
 

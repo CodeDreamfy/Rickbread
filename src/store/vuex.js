@@ -14,7 +14,7 @@ const store = new Vuex.Store({
     },
     isAppWork:'false',
     netWork: 0, //有无网络
-    workState: null, //待机状态
+    sensorStatus: null
   },
   mutations: {
     changeIntroState (state, num) {
@@ -34,7 +34,10 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    
+    changeStore (context, obj) {
+      context.state.netWork = OJS.device.onlineStatus //网络状态
+      context.state.sensorStatus = obj 
+    }
   },
   modules: {
     indexModule

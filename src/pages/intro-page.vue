@@ -4,8 +4,8 @@
 			<div class="block-common-title">设备状态</div>
 			<div class="block-common-content">
 				<div class="block-row">
-					<div :class="this.$store.state.network ? 'online-status' : 'off online-status' "><i class="icon iconfont icon-wifi"></i>{{this.$store.state.netWork ? '在线' : '离线'}}</div>
-					<div class="standBy-status"><i class="icon iconfont icon-cornBread-click"></i>待机</div>
+					<div :class="this.$store.state.network ? 'off online-status' : 'online-status' "><i class="icon iconfont icon-wifi"></i>{{this.$store.state.netWork ? '在线' : '离线'}}</div>
+					<div class="standBy-status"><i :class="'icon'+' iconfont '+workState.class"></i>{{workState.name}}</div>
 				</div>
 				<div class="block-row">
 					<div class="online-status"><i class="icon iconfont icon-nomenu"></i>无菜单</div>
@@ -48,14 +48,6 @@
   export default {
 		data () {
 			return {
-				workState: [
-					'待机','完成','搅拌1',
-					'醒面1','搅拌2','醒面2',
-					'搅拌3','醒面3','搅拌4',
-					'发酵1','发酵2','烘烤',
-					'保温','预约中','烘烤+搅拌',
-					'搅拌+醒面','发酵3'
-					]
 			}
 		},
 		methods: {
@@ -68,7 +60,30 @@
 		computed: {
 			warningState () {
 				return this.$store.state.warningState.state;
-			}
+			},
+			workState () {
+				let workstatus = [
+					{name: '待机', class: 'icon-standby'},
+					{name: '完成', class: 'icon-carryout'},
+					{name: '搅拌1', class: 'icon-stir'},
+					{name: '醒面1', class: 'icon-wekeUp'},
+					{name: '醒面2', class: 'icon-wekeUp'},
+					{name: '搅拌3', class: 'icon-stir'},
+					{name: '醒面3', class: 'icon-wekeUp'},
+					{name: '搅拌4', class: 'icon-stir'},
+					{name: '发酵1', class: 'icon-ferment'},
+					{name: '发酵2', class: 'icon-ferment'},
+					{name: '烘烤', class: 'icon-bake'},
+					{name: '保温', class: 'icon-standBy'},
+					{name: '预约中', class: 'icon-reservation'},
+					{name: '烘烤+搅拌', class: 'icon-standBy'},
+					{name: '搅拌+醒面', class: 'icon-standBy'},
+					{name: '发酵3', class: 'icon-ferment'}
+				]
+				// var i = this.$store.state.sensorStatus.WorkStatus ? this.$store.state.sensorStatus.WorkStatus : 0;
+				return workstatus[0]
+			},
+			
 		}
 	}
 </script>
