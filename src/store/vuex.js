@@ -14,7 +14,8 @@ const store = new Vuex.Store({
     },
     isAppWork:'false',
     netWork: 0, //有无网络
-    sensorStatus: null
+    sensorStatus: null,
+    workStatus: 0
   },
   mutations: {
     changeIntroState (state, num) {
@@ -36,7 +37,11 @@ const store = new Vuex.Store({
   actions: {
     changeStore (context, obj) {
       context.state.netWork = OJS.device.onlineStatus //网络状态
-      context.state.sensorStatus = obj 
+      console.log('dispatch OBJ message:',obj); 
+      if(obj){
+        context.state.workStatus = obj.WorkStatus;
+        context.dispatch('menuChange',obj.WFID)
+      }
     }
   },
   modules: {

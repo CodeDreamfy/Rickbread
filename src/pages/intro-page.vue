@@ -8,7 +8,7 @@
 					<div class="standBy-status"><i :class="'icon'+' iconfont '+workState.class"></i>{{workState.name}}</div>
 				</div>
 				<div class="block-row">
-					<div class="online-status"><i class="icon iconfont icon-nomenu"></i>无菜单</div>
+					<div class="online-status"><i :class="'icon'+' iconfont '+menuState.class"></i>{{menuState.name}}</div>
 					<div class="standBy-status"><i class="icon iconfont icon-countdown"></i>01：50</div>
 				</div>
 			</div>
@@ -80,10 +80,54 @@
 					{name: '搅拌+醒面', class: 'icon-standBy'},
 					{name: '发酵3', class: 'icon-ferment'}
 				]
-				// var i = this.$store.state.sensorStatus.WorkStatus ? this.$store.state.sensorStatus.WorkStatus : 0;
-				return workstatus[0]
+				var i = this.$store.state.workstatus ? this.$store.state.workstatus : 0;
+				// this.$store.dispatch('changeStore',{})
+				// console.log(this.$store.state.indexModule.menuState);
+				return workstatus[i]
 			},
-			
+			menuState () {
+				let menutatus = [
+					{name: '云菜谱', class: 'icon-standby'},
+					{name: '欧式面包', class: 'icon-european'},
+					{name: '法式面包', class: 'icon-french'},
+					{name: '和风面包', class: 'icon-windBread'},
+					{name: '有机杂粮/全麦面包', class: 'icon-wekeUp'},
+					{name: '无筋面包', class: 'icon-noGlutenBread'},
+					{name: '快速面包', class: 'icon-fast'},
+					{name: '西式蛋糕(蛋糕)', class: 'icon-westernCake'},
+					{name: '米饭面包', class: 'icon-ricebread'},
+					{name: '玉米面包', class: 'icon-cornBread'},
+					{name: '紫米面包', class: 'icon-purpleRiceBread'},
+					{name: '玄米面包', class: 'icon-mysteriousRiceBread'},
+					{name: '八宝米粥', class: 'icon-babaoRice'},
+					{name: '年糕/糯米团', class: 'icon-rickcake'},
+					{name: 'iMix', class: 'icon-IMIX'},
+					{name: '生面团', class: 'icon-dough'},
+					{name: '自定义和面', class: 'icon-customAndFace'},
+					{name: '米酒/低温发酵', class: 'icon-lowRiceWine'},
+					{name: '葡萄酒', class: 'icon-standby'}, //暂无
+					{name: '酸奶', class: 'icon-yogurt'},
+					{name: '花式果酱(果酱)', class: 'icon-fancyjam'},
+					{name: '自动翻炒(翻炒)', class: 'icon-stirFlick'},
+					{name: '发酵.烘烤', class: 'icon-bakeStir'},
+					{name: '烘烤/炖/煮', class: 'icon-barbecue'},
+					{name: '自定义', class: 'icon-customAndFace'},
+					{name: '欧式甜点', class: 'icon-european-dessert'},
+					{name: '解冻', class: 'icon-thaw'},
+					{name: '无糖面包', class: 'icon-ferment'}, //暂无
+					{name: '发酵', class: 'icon-ferment'},
+					{name: '肉松', class: 'icon-flossing'},
+					{name: '白面馒头', class: 'icon-ferment'}, //暂无
+					{name: '玉米面包', class: 'icon-ferment'}, //暂无
+					{name: '麦香馒头', class: 'icon-ferment'}, //暂无
+					{name: '杂粮馒头', class: 'icon-ferment'}, //暂无
+					{name: '甜味馒头', class: 'icon-ferment'}, //暂无
+					{name: '煲仔饭', class: 'icon-ferment'}, //暂无
+					{name: '和面', class: 'icon-andface'}
+				]
+				var i = this.$store.state.indexModule.menuState ? this.$store.state.indexModule.menuState : 1;
+				return menutatus[i]
+			}
 		}
 	}
 </script>

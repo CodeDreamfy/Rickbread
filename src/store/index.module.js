@@ -3,7 +3,8 @@ const indexModule = {
     loading: {
       loadingState: true, //遮罩
       loadText: '正在载入APP环境'
-    }
+    },
+    menuState: 1
   },
   mutations: {
     loadingChange (state, {flag, txt}) {
@@ -24,6 +25,9 @@ const indexModule = {
         loadingState: false,
         loadText: '正在连接设备'
       }
+    },
+    menuChange (context, o) {
+      context.state.menuState = o
     }
   }
 }
