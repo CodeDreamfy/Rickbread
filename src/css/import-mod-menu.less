@@ -1,0 +1,34 @@
+.menu-page {
+  .block-common {
+    .block-row-center {
+      height: 208px;
+      &>a {
+        flex: 0 0 50%;
+        display: flex;
+        height: 142px;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        &:first-child {
+          border-right: 1px solid #ebebeb; /*no*/
+        }
+        span {
+          color: #333;
+          &:first-child {
+            flex: 0 0 97px;
+          }
+          &:last-child { margin-top: 16px;}
+          &.clound-icon {
+            background: url(../assets/sp-icon.png) no-repeat center 0;
+            background-size: 98px 201px;
+          }
+          &.repice-icon {
+            background: url(../assets/sp-icon.png) no-repeat center -104px;
+            background-size: 98px 201px;
+          }
+        }
+      }
+    }
+  }
+  .block-menu-tab { background: none; box-shadow: none;}
+}
