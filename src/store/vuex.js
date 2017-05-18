@@ -11,7 +11,7 @@ const store = new Vuex.Store({
     isAppWork: 'false',
     netWork: false, // 有无网络
     sensorStatus: null,
-    workStatus: 2,
+    workStatus: 0,
     sensor: {},
     errorCode: 0,
     msgTypeCode: 0,

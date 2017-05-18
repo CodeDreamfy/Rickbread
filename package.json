@@ -75,6 +75,7 @@
       "/dopm",
       "/static"
     ],
+    "extends": "vue",
     "globals": [
       "OJS",
       "Array",

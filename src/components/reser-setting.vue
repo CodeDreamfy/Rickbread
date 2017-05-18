@@ -86,7 +86,7 @@
 </template>
 
 <script>
-  //import timePick from '@/components/time-pick'
+  import menuList from '@/assets/menu-data'
   import { mapState } from 'vuex'
   export default {
     data () {
@@ -95,6 +95,7 @@
         buffData: {},
         weightVal: 2,
         colorVal: 2,
+        reservationVal: [0,0]
       }
     },
     watch: {
@@ -189,7 +190,25 @@
         }
       },
       onValuesChange (picker, value) {
-        // console.log(picker, value)
+        console.log(value);
+        this.reservationVal = value
+      },
+      reservation () {
+        //预约
+        if(this._workstatus == 13) {
+          OJS.app.toast("设备正在预约中")
+          return false
+        }
+        if(this._workstatus == 0 ) {
+          let c = '0x' + this.$route.params.id,
+          color = '0x' + this.colorVal -1,
+          weight = '0x' + this.weightVal -1,
+          yhours = '0x' + this.reservationVal[0],
+          yminute = '0x' + this.reservationVal[1];
+          this.sendNotify(0x02,0x00,c,color,weight,0x0,0x0,yhours,yminute);
+        }else {
+          OJS.app.toast("设备只有在待机状态才能预约成功");
+        }
       }
     },
 		filters: {
@@ -202,6 +221,7 @@
     mounted () {
       this.colorVal = this._roasted;
       this.weightVal = this._weights;
+      console.log(menuList.code)
     }
   }
 </script>

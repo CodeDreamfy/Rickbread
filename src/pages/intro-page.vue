@@ -35,7 +35,7 @@
 					</div>
 					<div class="device-wrap">
 						<a href="javascript:;" @touchstart="pauseUp" :class="'pause-btn ' + (_workstatus <= 1 ? 'off' : '')">
-							<i :class="'iconfont device-btn ' + (_isPause ? 'icon-timeout' : 'icon-start' )"></i>
+							<i :class="'iconfont device-btn ' + (_isPause ? 'icon-start' : 'icon-timeout' )"></i>
 						</a>
 						<p>{{_isPause? '暂停' : '继续'}}</p>
 					</div>
