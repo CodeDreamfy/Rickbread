@@ -12,27 +12,40 @@
         </div>
         <div class="setting-container-layer" v-show="container == 2">
           <div class="setting-layer-titile">配方设置</div>
-          <div class="setting-layer-container peifang">
-            <table class="table-list" >
-              <tr>
-                <td>鸡蛋（轻微搅拌）3个</td>
-                <td>熟米饭 1+3/4杯</td>
-              </tr>
-              <tr>
-                <td>糖 1/8杯</td>
-                <td>葡萄干 1/8杯</td>
-              </tr>
-              <tr>
-                <td>香草精 1小勺</td>
-                <td>肉桂 1小勺</td>
-              </tr>
-              <tfoot>
-                <tr>
-                  <td colspan="2"><i class="iconfont icon-tips"></i>提示：鸡蛋需要搅拌均匀！</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
+					<div class="setting-layer-container peifang" v-for="data in menuList.list">
+						<p>{{data.name}}</p>
+						<table class="table-list" >
+							<template v-if="menuList.type == 1">
+								<template v-for="(tds, key) in data.rows">
+									<tr>
+										<template v-for="(td, tdkey) in tds">
+											<template v-if="Array.isArray(td)">
+												<td v-for="d in td" colspan="1">{{d}}</td>
+											</template>
+											<template v-else>
+												<td colspan="2">{{td}}</td>
+											</template>
+										</template>
+									</tr>
+								</template>
+							</template>
+							<template v-if="menuList.type == 2">
+								<template v-for="(tds, key) in data.rows">
+									<tr>
+										<template v-if="tds.length == 1">
+											<td style="text-align:left; text-indent: 1em;" :colspan="data.rows[1].length">{{tds[0]}}</td>
+										</template>
+										<template v-else>
+											<td v-for="td in tds" style="width:auto;">{{td}}</td>
+										</template>
+									</tr>
+								</template>
+							</template>
+							</tfoot>
+						</table>
+						<p class="footer" v-if="!!data.foot"><i class="iconfont icon-tips"></i>{{data.foot}}</p>
+					</div>
+          
         </div>
       </div>
     </transition>
@@ -95,7 +108,8 @@
         buffData: {},
         weightVal: 2,
         colorVal: 2,
-        reservationVal: [0,0]
+        reservationVal: [0,0],
+				menuList: {}
       }
     },
     watch: {
@@ -221,7 +235,7 @@
     mounted () {
       this.colorVal = this._roasted;
       this.weightVal = this._weights;
-      console.log(menuList.code)
+			this.menuList = menuList[this.$route.params.id];
     }
   }
 </script>

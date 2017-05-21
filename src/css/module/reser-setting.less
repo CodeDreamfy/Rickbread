@@ -65,25 +65,46 @@
     }
   }
   .setting-container-layer {
-    .peifang { padding: 24px;}
+		max-height: 600px; overflow-y: auto;
+		.setting-layer-titile {
+			position: sticky;
+			width: 100%;
+			top: 0;
+			left: 0;
+			background: #fff;
+		}
+    .peifang { 
+			padding: 24px;
+			p {
+				font-size: 24px;
+				padding: 14px 0; line-height: 42px;
+				color: #8894ab;
+			}
+		}
     .table-list {
       width: 100%;
       font-size: 28px; color: #666;
       tr {
         height: 86px;
-        border: 1px solid #ebebeb;/*no*/
+        // border: 1px solid #ebebeb;/*no*/
         // border-width: 1px 1px 0 1px;
         td {
-          width: 50%;
-          &:last-child {
-            border-left: 1px solid #ebebeb;
-          }
+					font-size: 24px;
+					border: 1px solid #ebebeb;
+					&:first-child {
+						width: 120px; 
+					}
         }
       }
       tfoot tr td {
-        i { color: #ff8a00; font-size: 26px; margin-right: 18px;}
+        
       }
     }
+		.footer {
+			color: #ff8a00; font-size: 26px; text-align: center;
+			i { color: #ff8a00; font-size: 26px; margin-right: 18px;}
+			border: 1px solid #ebebeb; border-top: 0;
+		}
     
   }
 }
