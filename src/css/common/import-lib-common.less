@@ -100,11 +100,11 @@ th {
 	border: none;
 }
 
-a { 
-	text-decoration: none; 
-	-webkit-touch-callout: none; 
-	-webkit-user-select: none !important; 
-	-webkit-tap-highlight-color: transparent; 
+a {
+	text-decoration: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none !important;
+	-webkit-tap-highlight-color: transparent;
 	color: inherit;
 }
 em,i { font-style: normal;}
@@ -223,7 +223,7 @@ i.icon.iconfont {
 	width: 100vw;
 	min-height: 200px; background: #fff;
 	.setting-layer-titile {
-		height: 86px; line-height: 86px; font-size: 30px; 
+		height: 86px; line-height: 86px; font-size: 30px;
 		padding: 0 24px; color: #8894ab;
 		border-bottom: 1px solid #ebebeb;/*no*/
 		letter-spacing: 2px;
@@ -253,9 +253,9 @@ i.icon.iconfont {
 }
 
 .setting-com {
-	height: 164px; display: flex;
+	height: 164px; display: flex; position: relative;
 	align-items: center; justify-content: flex-start;
-	.valtxt { 
+	.valtxt {
 		flex: 0 0 90px; padding: 0 4px;
 		text-align: center; font-size: 26px; color: #666;
 		// &:last-child { text-align: left;}
@@ -264,6 +264,10 @@ i.icon.iconfont {
 	.slidebar-wrap {
 		width: calc(100vw - 1.8rem);
 	}
+  .overlay-no {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.5);
+    z-index: 99; display: none;
+  }
 }
 
 
@@ -278,7 +282,7 @@ i.icon.iconfont {
     -webkit-appearance: none;
     margin: 10px 0;
     width: 100%;
-    
+
   }
   input[type=range]:focus {
     outline: none; background: none;
@@ -352,8 +356,8 @@ i.icon.iconfont {
 .warning-tips {
 	position: fixed; top: 0; left: 0; z-index: 100;
 	width: 100%; height: 90px;
-	padding: 0 30px; 
-	background: rgba(243,231,212,.9); 
+	padding: 0 30px;
+	background: rgba(243,231,212,.9);
 	display: flex; justify-content: space-between;
 	align-items: center;
 	.tipstext {

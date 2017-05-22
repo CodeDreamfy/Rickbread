@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>面包机</title><script>//var w = window.innerWidth;
+      //console.log(w)
+      var dpr = window.devicePixelRatio;
+      var vpMeta = document.createElement("meta");
+      var meta = document.querySelector('meta[name="viewport"]');
+      if(meta){
+        meta.setAttribute('content', 'initial-scale=' + 1/dpr + ',user-scalable=no');
+      }else {
+        vpMeta.setAttribute('name', 'viewport');
+        vpMeta.setAttribute('content', 'initial-scale=' + 1/dpr + ',user-scalable=no');
+        document.documentElement.firstElementChild.appendChild(vpMeta);
+      }
+      //Debug_Device
+      /*window.__DEBUG_DEVICE_ID = 4350231;
+      window.__DEBUG_DEVICE_TOKEN = '_ElTzj0y';
+      */</script><script src="http://appapi.heclouds.com/sdk/ojs.min.js?v=1.0.2"></script><link href=./static/css/app.75b70da262d2bf697a95ce339fd14ec1.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=./static/js/manifest.80c17ee21a52b15b72f5.js></script><script type=text/javascript src=./static/js/vendor.5d1373bc62dd922e5f06.js></script><script type=text/javascript src=./static/js/app.af3d840351cc1cfd0880.js></script></body></html>

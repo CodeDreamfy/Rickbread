@@ -7,49 +7,50 @@
           <div class="setting-layer-container">
             <!--<time-pick></time-pick>-->
             <mt-picker class="mtpicker-custom" :slots="slots" @change="onValuesChange" :itemHeight="68"></mt-picker>
-            <div class="ui-btn primary"><a href="javascript:;" class="btn">启动</a></div>
+            <div class="ui-btn primary"><a href="javascript:;" class="btn" @touchend="reservation">启动</a></div>
           </div>
         </div>
         <div class="setting-container-layer" v-show="container == 2">
           <div class="setting-layer-titile">配方设置</div>
-					<div class="setting-layer-container peifang" v-for="data in menuList.list">
-						<p>{{data.name}}</p>
-						<table class="table-list" >
-							<template v-if="menuList.type == 1">
-								<template v-for="(tds, key) in data.rows">
-									<tr>
-										<template v-for="(td, tdkey) in tds">
-											<template v-if="Array.isArray(td)">
-												<td v-for="d in td" colspan="1">{{d}}</td>
-											</template>
-											<template v-else>
-												<td colspan="2">{{td}}</td>
-											</template>
-										</template>
-									</tr>
-								</template>
-							</template>
-							<template v-if="menuList.type == 2">
-								<template v-for="(tds, key) in data.rows">
-									<tr>
-										<template v-if="tds.length == 1">
-											<td style="text-align:left; text-indent: 1em;" :colspan="data.rows[1].length">{{tds[0]}}</td>
-										</template>
-										<template v-else>
-											<td v-for="td in tds" style="width:auto;">{{td}}</td>
-										</template>
-									</tr>
-								</template>
-							</template>
-							</tfoot>
-						</table>
-						<p class="footer" v-if="!!data.foot"><i class="iconfont icon-tips"></i>{{data.foot}}</p>
-					</div>
-          
+          <template v-if="!!menuList">
+            <div class="setting-layer-container peifang" v-for="data in menuList.list">
+              <p>{{data.name}}</p>
+              <table class="table-list" >
+                <template v-if="menuList.type == 1">
+                  <template v-for="(tds, key) in data.rows">
+                    <tr>
+                      <template v-for="(td, tdkey) in tds">
+                        <template v-if="Array.isArray(td)">
+                          <td v-for="d in td" colspan="1">{{d}}</td>
+                        </template>
+                        <template v-else>
+                          <td colspan="2">{{td}}</td>
+                        </template>
+                      </template>
+                    </tr>
+                  </template>
+                </template>
+                <template v-if="menuList.type == 2">
+                  <template v-for="(tds, key) in data.rows">
+                    <tr>
+                      <template v-if="tds.length == 1">
+                        <td style="text-align:left; text-indent: 1em;" :colspan="data.rows[1].length">{{tds[0]}}</td>
+                      </template>
+                      <template v-else>
+                        <td v-for="td in tds" style="width:auto;">{{td}}</td>
+                      </template>
+                    </tr>
+                  </template>
+                </template>
+                </tfoot>
+              </table>
+              <p class="footer" v-if="!!data.foot"><i class="iconfont icon-tips"></i>{{data.foot}}</p>
+            </div>
+          </template>
         </div>
       </div>
     </transition>
-    
+
     <div class="reserva-head">
       <div class="round-show-wrap">
         <div class="round-rotate" :class="{'key-animate': _workstatus > 1}">
@@ -58,28 +59,35 @@
           </a>
         </div>
         <div class="round-showtime" :class="{'round-animate': _workstatus > 1}">
-          <p class="time-txt">{{_workTime[2] | timeFilter}}<i>:</i>{{ _workTime[3] | timeFilter }}</p>
-          <p class="type-txt">{{colorText + '色'}} {{weightText}}</p>
+          <p class="time-txt">{{filterFeatures[paramId][colorVal].time[0] || '00'}}<i>:</i>{{ filterFeatures[paramId][colorVal].time[1] || '30'}}</p>
+          <p class="type-txt">{{colorText ? colorText +'色' : '无'}} {{weightText ? weightText : ''}}</p>
         </div>
       </div>
     </div>
     <div class="reser-block">
-      <div class="setting-color setting-com">
-        <span class="valtxt">浅</span>
-        <div class="slidebar-wrap ui-range">
-          <input type="range" class="" min='1' step="1" v-model="colorVal" max='3'>
-          <span class="movetips movetips-color">{{colorText}}</span>
+      <template v-if="!filterFeatures[paramId].color">
+        <div class="setting-color setting-com">
+          <div class="overlay-no"></div>
+          <span class="valtxt">浅</span>
+          <div class="slidebar-wrap ui-range">
+            <input type="range" class="" min='1' step="1" v-model="colorVal" max='3'>
+            <span class="movetips movetips-color">{{colorText}}</span>
+          </div>
+          <span class="valtxt">深</span>
         </div>
-        <span class="valtxt">深</span>
-      </div>
-      <div class="setting-weight setting-com">
-        <span class="valtxt">500</span>
-        <div class="slidebar-wrap ui-range">
-          <input type="range" class="" min="1" step="1" max='3' v-model="weightVal">
-          <span class="movetips movetips-weight">{{weightText}}</span>
+      </template>
+      <template v-if="!filterFeatures[paramId].weight">
+        <div class="setting-weight setting-com">
+          <div class="overlay-no"></div>
+          <span class="valtxt">500</span>
+          <div class="slidebar-wrap ui-range">
+            <input type="range" class="" min="1" step="1" max='3' v-model="weightVal">
+            <span class="movetips movetips-weight">{{weightText}}</span>
+          </div>
+          <span class="valtxt">1000</span>
         </div>
-        <span class="valtxt">1000</span>
-      </div>
+      </template>
+
       <div class="btnwrap-common">
         <a href="javascript:;" class="reserve-btn btnwrap" @touchend="showLayer(1)">
           <i class="iconfont icon-reservation"></i>
@@ -89,7 +97,7 @@
           <i class="iconfont icon-start"></i>
           <p>启动</p>
         </a>
-        <a href="javascript:;" class="formula-btn btnwrap" @touchend="showLayer(2)">
+        <a href="javascript:;" class="formula-btn btnwrap" :class="!!menuList ? '' : 'off' " @touchend="showLayer(2)">
           <i class="iconfont icon-customAndFace"></i>
           <p>配方</p>
         </a>
@@ -109,7 +117,190 @@
         weightVal: 2,
         colorVal: 2,
         reservationVal: [0,0],
-				menuList: {}
+				menuList: {},
+        filterFeatures: {
+          1: { //欧式面包
+            1: {time:['03','35']},
+            2: {time:['03','40']},
+            3: {time:['03','45']}
+          },
+          2: { //法式面包
+            1: {time:['03','55']},
+            2: {time:['04','00']},
+            3: {time:['04','05']}
+          },
+          3: { //和式面包
+            1: {time:['03','45']},
+            2: {time:['03','50']},
+            3: {time:['03','55']}
+          },
+          4: { //有机杂粮
+            1: {time:['03','20']},
+            2: {time:['03','25']},
+            3: {time:['03','30']}
+          },
+          5: { //无筋面包
+            1: {time:['02','30']},
+            2: {time:['02','35']},
+            3: {time:['02','40']}
+          },
+          6: { //快速面包
+            1: {time:['01','55']},
+            2: {time:['02','00']},
+            3: {time:['02','05']},
+            timeReserve: true
+          },
+          7: { //西式蛋糕
+            weight: 1,
+            timeReserve: true,
+            1: {time:['01','50']},
+            2: {time:['01','50']},
+            3: {time:['01','50']}
+          },
+          8: { //米饭面包
+            1: {time:['02','45']},
+            2: {time:['02','50']},
+            3: {time:['02','55']}
+          },
+          9: { //玉米面包
+            1: {time:['03','35']},
+            2: {time:['03','40']},
+            3: {time:['03','45']}
+          },
+          10: { //紫米面包
+            1: {time:['02','40']},
+            2: {time:['02','45']},
+            3: {time:['02','50']}
+          },
+          11: { //玄米面包
+            1: {time:['03','25']},
+            2: {time:['03','30']},
+            3: {time:['03','35']}
+          },
+          12: { //八宝
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['01','20']},
+            2: {time:['01','20']},
+            3: {time:['01','20']}
+          },
+          13: { //年糕
+            color: 3,
+            weight: 1,
+            1: {time:['01','20']},
+            2: {time:['01','20']},
+            3: {time:['01','20']}
+          },
+          14: { //iMax
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['01','20']},
+            2: {time:['01','20']},
+            3: {time:['01','20']}
+          },
+          15: { //生面团
+            color: 3,
+            weight: 1,
+            1: {time:['01','30']},
+            2: {time:['01','30']},
+            3: {time:['01','30']}
+          },
+          16: { //自定义和面
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['01','13']},
+            2: {time:['01','13']},
+            3: {time:['01','13']}
+          },
+          17: { //米酒低温发酵
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['48','00']},
+            2: {time:['48','00']},
+            3: {time:['48','00']}
+          },
+          18: { //葡萄酒
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['48','00']},
+            2: {time:['48','00']},
+            3: {time:['48','00']}
+          },
+          19: { //酸奶
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['08','00']},
+            2: {time:['08','00']},
+            3: {time:['08','00']}
+          },
+          20: { //花式果酱
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['01','20']},
+            2: {time:['01','20']},
+            3: {time:['01','20']}
+          },
+          21: { //翻炒
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['00','30']},
+            2: {time:['00','30']},
+            3: {time:['00','30']}
+          },
+          23: { //烘烤、炖
+            weight: 1,
+            timeReserve: true,
+            1: {time:['00','30']},
+            2: {time:['00','30']},
+            3: {time:['00','30']}
+          },
+          25: { //欧式甜点
+            weight: 3,
+            timeReserve: true,
+            1: {time:['01','40']},
+            2: {time:['01','40']},
+            3: {time:['01','40']}
+          },
+          26: { //解冻
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['00','30']},
+            2: {time:['00','30']},
+            3: {time:['00','30']}
+          },
+          28: { //发酵
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['02','00']},
+            2: {time:['02','00']},
+            3: {time:['02','00']}
+          },
+          29: { //肉松
+            color: 3,
+            weight: 1,
+            timeReserve: true,
+            1: {time:['00','45']},
+            2: {time:['00','45']},
+            3: {time:['00','45']}
+          },
+          36: { //和面
+            weight: 1,
+            color: true,
+            1: {time:['00','33']},
+            2: {time:['00','33']},
+            3: {time:['00','33']}
+          }
+        }
       }
     },
     watch: {
@@ -140,6 +331,9 @@
         _roasted: (state,getters)=>getters.roasted,
         _weights: (state,getters)=>getters.weights
 			}),
+      paramId () {
+        return this.$route.params.id
+      },
       slots () {
         let hourTimeArr = this.computedArr(0,48);
         let minTimeArr = this.computedArr(0,59);
@@ -195,7 +389,15 @@
         return buffArray
       },
       showLayer (num) {
-        this.container = num;
+        if(num !== 2) {
+          this.container = num;
+        }else {
+          if(this.menuList){
+            this.container = num;
+          }else {
+            return false
+          }
+        }
       },
       hideLayer ($) {
         var elem =  $.target.className;
@@ -204,8 +406,8 @@
         }
       },
       onValuesChange (picker, value) {
-        console.log(value);
-        this.reservationVal = value
+        this.reservationVal = picker.getValues();
+        console.log('ReservationVal',picker.getValues());
       },
       reservation () {
         //预约
@@ -213,12 +415,23 @@
           OJS.app.toast("设备正在预约中")
           return false
         }
+        let arr = new Array(11).fill(0);//补充后面11个字节
+        let obj = {
+          color: this.colorVal - 1,
+          weight: this.weightVal - 1,
+          yhours: this.reservationVal[0],
+          yminute: this.reservationVal[1],
+          makeTime: this.filterFeatures[paramId]
+        };
+        if(this.filterFeatures.color){
+          obj.color = 3
+        }
         if(this._workstatus == 0 ) {
-          let c = '0x' + this.$route.params.id,
-          color = '0x' + this.colorVal -1,
-          weight = '0x' + this.weightVal -1,
-          yhours = '0x' + this.reservationVal[0],
-          yminute = '0x' + this.reservationVal[1];
+          let c = this.$route.params.id,
+          color = this.colorVal -1,
+          weight = this.weightVal -1,
+          yhours = this.reservationVal[0],
+          yminute = this.reservationVal[1];
           this.sendNotify(0x02,0x00,c,color,weight,0x0,0x0,yhours,yminute);
         }else {
           OJS.app.toast("设备只有在待机状态才能预约成功");
@@ -235,6 +448,7 @@
     mounted () {
       this.colorVal = this._roasted;
       this.weightVal = this._weights;
+      //menuList
 			this.menuList = menuList[this.$route.params.id];
     }
   }
