@@ -6,7 +6,7 @@
           <div class="setting-layer-titile">预约设置</div>
           <div class="setting-layer-container">
             <!--<time-pick></time-pick>-->
-            <mt-picker class="mtpicker-custom" :slots="slots" @change="onValuesChange" :itemHeight="68"></mt-picker>
+            <mt-picker class="mtpicker-custom" :slots="slots" @change="onValuesChange" :itemHeight="68" ></mt-picker>
             <div class="ui-btn primary"><a href="javascript:;" class="btn" @touchend="reservation">启动</a></div>
           </div>
         </div>
@@ -87,7 +87,6 @@
           <span class="valtxt">1000</span>
         </div>
       </template>
-
       <div class="btnwrap-common">
         <a href="javascript:;" class="reserve-btn btnwrap" @touchend="showLayer(1)">
           <i class="iconfont icon-reservation"></i>
@@ -116,33 +115,38 @@
         buffData: {},
         weightVal: 2,
         colorVal: 2,
-        reservationVal: [0,0],
+        reservaVal: [0,0],
 				menuList: {},
         filterFeatures: {
           1: { //欧式面包
             1: {time:['03','35']},
             2: {time:['03','40']},
-            3: {time:['03','45']}
+            3: {time:['03','45']},
+						yuyue: true
           },
           2: { //法式面包
             1: {time:['03','55']},
             2: {time:['04','00']},
-            3: {time:['04','05']}
+            3: {time:['04','05']},
+						yuyue: true
           },
           3: { //和式面包
             1: {time:['03','45']},
             2: {time:['03','50']},
-            3: {time:['03','55']}
+            3: {time:['03','55']},
+						yuyue: true
           },
           4: { //有机杂粮
             1: {time:['03','20']},
             2: {time:['03','25']},
-            3: {time:['03','30']}
+            3: {time:['03','30']},
+						yuyue: true
           },
           5: { //无筋面包
             1: {time:['02','30']},
             2: {time:['02','35']},
-            3: {time:['02','40']}
+            3: {time:['02','40']},
+						yuyue: true
           },
           6: { //快速面包
             1: {time:['01','55']},
@@ -160,22 +164,26 @@
           8: { //米饭面包
             1: {time:['02','45']},
             2: {time:['02','50']},
-            3: {time:['02','55']}
+            3: {time:['02','55']},
+						yuyue: true
           },
           9: { //玉米面包
             1: {time:['03','35']},
             2: {time:['03','40']},
-            3: {time:['03','45']}
+            3: {time:['03','45']},
+						yuyue: true
           },
           10: { //紫米面包
             1: {time:['02','40']},
             2: {time:['02','45']},
-            3: {time:['02','50']}
+            3: {time:['02','50']},
+						yuyue: true
           },
           11: { //玄米面包
             1: {time:['03','25']},
             2: {time:['03','30']},
-            3: {time:['03','35']}
+            3: {time:['03','35']},
+						yuyue: true
           },
           12: { //八宝
             color: 3,
@@ -190,7 +198,8 @@
             weight: 1,
             1: {time:['01','20']},
             2: {time:['01','20']},
-            3: {time:['01','20']}
+            3: {time:['01','20']},
+						yuyue: true
           },
           14: { //iMax
             color: 3,
@@ -205,7 +214,8 @@
             weight: 1,
             1: {time:['01','30']},
             2: {time:['01','30']},
-            3: {time:['01','30']}
+            3: {time:['01','30']},
+						yuyue: true
           },
           16: { //自定义和面
             color: 3,
@@ -298,7 +308,8 @@
             color: true,
             1: {time:['00','33']},
             2: {time:['00','33']},
-            3: {time:['00','33']}
+            3: {time:['00','33']},
+						yuyue: true
           }
         }
       }
@@ -335,30 +346,52 @@
       paramId () {
         return this.$route.params.id
       },
+			yuyueTimes () {
+				let o = this.filterFeatures[this.paramId];
+				let timeArr, otime = {}, n;
+				let min = o[this.colorVal-1].time[1];
+
+				if(o.yuyue) {
+					n = this.computedArr(+o[this.colorVal-1].time[0], 15);
+				}
+
+				for(let i=0; i<n.length; i++){
+					if(i==0){
+						otime[n[0]] = this.computedArr(min,60)
+					}else {
+						otime[n[i]] = this.computedArr(0,60)
+					}
+				}
+				console.log(otime)
+				return otime
+			},
       slots () {
-        let hourTimeArr = this.computedArr(0,48);
-        let minTimeArr = this.computedArr(0,59);
-        return [
+				var c = this.yuyueTimes;
+				console.log(c)
+        var slotsArr = [
           {
             flex: '0 0 10%',
-            values: hourTimeArr,
+            values: Object.keys(c),
             className: 'slot1',
-            textAlign: 'center'
+            textAlign: 'center',
+						defaultIndex: 0,
           },{
             divider: true,
             content:'小时',
             className: 'divider-hour'
           }, {
             flex: '0 0 10%',
-            values: minTimeArr,
+            values: this.yuyueTimes[3],
             className: 'solt2',
-            textAlign: 'center'
+            textAlign: 'center',
+						defaultIndex: 0
           }, {
             divider: true,
             content: '分钟',
             className: 'divider-min'
           }
         ]
+				return slotsArr
       },
       colorText () {
         switch (this.colorVal) {
@@ -386,7 +419,7 @@
     methods: {
       computedArr (min, max) {
         var buffArray = [];
-        for(var i= min; buffArray.push(i++) <= max;);
+        for(var i= min,index=0; (buffArray[index++]=min++) < max -1;);
         return buffArray
       },
       showLayer (num) {
@@ -406,9 +439,11 @@
           this.container = 0;
         }
       },
-      onValuesChange (picker, value) {
-        this.reservationVal = picker.getValues();
-        console.log('ReservationVal',picker.getValues());
+      onValuesChange (picker, values) {
+				console.info('picker:',values)
+				picker.setSlotValues(1, this.yuyueTimes[values[0]]);
+        this.reservaVal = [values[0],values[1]];
+				console.info('picker --', this.reservaVal)
       },
       reservation () {
         //预约
@@ -423,7 +458,7 @@
         }
         let o = this.getArgument();
         if(this._workstatus == 0 && this._errorCode == 0) {
-          this.sendNotify(...o, ...arr);
+          this.sendNotify({...o}, ...arr);
         }else {
           this.$store.commit('warnTipShow',true)
           OJS.app.toast("设备只有在待机状态才能预约成功")
@@ -433,24 +468,23 @@
       startDevice () {
         let o = this.getArgument();
         let arr = new Array(11).fill(0);//补充后面11个字节
-        if(this._workstatus == 0 && this._errorCode == 0) {
-          this.sendNotify(...o, ...arr);
-        }else {
-          this.$store.commit('warnTipShow',true)
-          OJS.app.toast("设备只有在待机状态才能启动成功");
-        }
+        // if(this._workstatus == 0 && this._errorCode == 0) {
+        //   this.sendNotify({...o}, ...arr);
+        // }else {
+        //   this.$store.commit('warnTipShow',true)
+        //   OJS.app.toast("设备只有在待机状态才能启动成功");
+        // }
       },
       //获取参数
       getArgument () {
-        let obj = {
-          color: this.colorVal - 1,
-          weight: this.weightVal - 1,
-          yhours: this.reservationVal[0],
-          yminute: this.reservationVal[1],
-          makeTimeHour: this.filterFeatures[this.paramId][this.colorVal].time[0],
-          makeTimeMin: this.filterFeatures[this.paramId][this.colorVal].time[1]
-        };
-
+				let obj =  [
+					this.colorVal - 1,
+					this.weightVal - 1,
+					this.reservaVal[0],
+					this.reservaVal[1],
+					+this.filterFeatures[this.paramId][this.colorVal].time[0],
+					+this.filterFeatures[this.paramId][this.colorVal].time[1]
+				]
         if(this.filterFeatures.color){
           obj.color = 3
         }
