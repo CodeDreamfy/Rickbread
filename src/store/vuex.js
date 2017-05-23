@@ -23,9 +23,6 @@ const store = new Vuex.Store({
     changeIntroState (state, num) {
       state.introState = num
     },
-    warningTaggle (state, obj) {
-      state.warningState = obj
-    },
     warnTipShow (state, st) {
       state.warnTips = st
     },
@@ -35,11 +32,11 @@ const store = new Vuex.Store({
     netWorkChange (state, status) {
       state.netWork = (!!status)
     },
-    warningState (state, o) {
-      state.errorCode = o.ErrorCode
-    },
     msgType (state, o) {
       state.msgTypeCode = o.MessageType
+    },
+    changeErrLayer () {
+
     }
   },
   actions: {
@@ -53,11 +50,20 @@ const store = new Vuex.Store({
         state.fuctionStatus = obj.FuctionStatus
         state.color = obj.Color
         state.weight = obj.Weight
+        dispatch('errorOverlay', obj.Error)
         state.sensor = obj
         dispatch('menuChange', obj.WFID)
         dispatch('workTime')
-        commit('warningState', obj)
         commit('msgType', obj)
+      }
+    },
+    errorOverlay ({ state }, errCode) {
+      // console.info(errCode)
+      state.errorCode = errCode
+      if (errCode !== 0) {
+        state.warnTips = true
+      } else {
+        state.warnTips = false
       }
     }
   },

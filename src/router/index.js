@@ -31,6 +31,7 @@ function configRouter (store) {
   })
 
   router.beforeEach((to, from, next) => {
+    // store.dispatch('errorOverlay', { errCode: 1 })  Test to errorlay
     OJS.bindAppReady(function () {
       console.info('BindAppReady')
       // OJS.app.toast("已经可以调用app的api了");

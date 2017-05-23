@@ -93,7 +93,7 @@
           <i class="iconfont icon-reservation"></i>
           <p>预约</p>
         </a>
-        <a href="javascript:;" class="start-btn btnwrap">
+        <a href="javascript:;" @touchend="startDevice" class="start-btn btnwrap">
           <i class="iconfont icon-start"></i>
           <p>启动</p>
         </a>
@@ -329,7 +329,8 @@
 				_network: 'netWork',
 				_isPause: (state,getters)=>getters.isPause,
         _roasted: (state,getters)=>getters.roasted,
-        _weights: (state,getters)=>getters.weights
+        _weights: (state,getters)=>getters.weights,
+        _errorCode: 'errorCode'
 			}),
       paramId () {
         return this.$route.params.id
@@ -416,26 +417,48 @@
           return false
         }
         let arr = new Array(11).fill(0);//补充后面11个字节
+        //如果制作时间不存在直接抛出异常
+        if(!this.filterFeatures[this.paramId]){
+          throw "filterFeatures不存在"
+        }
+        let o = this.getArgument();
+        if(this._workstatus == 0 && this._errorCode == 0) {
+          this.sendNotify(...o, ...arr);
+        }else {
+          this.$store.commit('warnTipShow',true)
+          OJS.app.toast("设备只有在待机状态才能预约成功")
+          return false
+        }
+      },
+      startDevice () {
+        let o = this.getArgument();
+        let arr = new Array(11).fill(0);//补充后面11个字节
+        if(this._workstatus == 0 && this._errorCode == 0) {
+          this.sendNotify(...o, ...arr);
+        }else {
+          this.$store.commit('warnTipShow',true)
+          OJS.app.toast("设备只有在待机状态才能启动成功");
+        }
+      },
+      //获取参数
+      getArgument () {
         let obj = {
           color: this.colorVal - 1,
           weight: this.weightVal - 1,
           yhours: this.reservationVal[0],
           yminute: this.reservationVal[1],
-          makeTime: this.filterFeatures[paramId]
+          makeTimeHour: this.filterFeatures[this.paramId][this.colorVal].time[0],
+          makeTimeMin: this.filterFeatures[this.paramId][this.colorVal].time[1]
         };
+
         if(this.filterFeatures.color){
           obj.color = 3
         }
-        if(this._workstatus == 0 ) {
-          let c = this.$route.params.id,
-          color = this.colorVal -1,
-          weight = this.weightVal -1,
-          yhours = this.reservationVal[0],
-          yminute = this.reservationVal[1];
-          this.sendNotify(0x02,0x00,c,color,weight,0x0,0x0,yhours,yminute);
-        }else {
-          OJS.app.toast("设备只有在待机状态才能预约成功");
+        if(this.filterFeatures.weight){
+          obj.weight = 1
         }
+        console.info('预约下发参数打印:', ...obj);
+        return obj
       }
     },
 		filters: {
