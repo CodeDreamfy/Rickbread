@@ -6,7 +6,7 @@
           <div class="setting-layer-titile">预约设置</div>
           <div class="setting-layer-container">
             <!--<time-pick></time-pick>-->
-            <mt-picker class="mtpicker-custom" :slots="slots" @change="onValuesChange" :itemHeight="68" ></mt-picker>
+            <mt-picker class="mtpicker-custom" :slots="slots" @change="onValuesChange" :visible-item-count="5" :itemHeight="68" ></mt-picker>
             <div class="ui-btn primary"><a href="javascript:;" class="btn" @touchend="reservation">启动</a></div>
           </div>
         </div>
@@ -311,22 +311,20 @@
             3: {time:['00','33']},
 						yuyue: true
           }
-        }
+        },
+        lastSlotVal: 3
       }
     },
     watch: {
       colorVal () {
         let c = document.querySelector('.ui-range .movetips-color');
         let z = ((this.colorVal-1)/2) * 100 + '%'
-        // console.log("change 了",z); //valSpan
          c.style.left = z;
-        // this.changeColorTxt()
       },
       weightVal () {
         let c = document.querySelector('.ui-range .movetips-weight');
 
         let z = ((this.weightVal-1)/2) * 100 + '%'
-        // console.log("change 了",z); //valSpan
         c.style.left = z;
       }
     },
@@ -348,13 +346,14 @@
       },
 			yuyueTimes () {
 				let o = this.filterFeatures[this.paramId];
-				let timeArr, otime = {}, n;
-				let min = o[this.colorVal-1].time[1];
+				let timeArr, otime = {}, n, min;
 
-				if(o.yuyue) {
-					n = this.computedArr(+o[this.colorVal-1].time[0], 15);
-				}
-
+        if(o.yuyue) {
+					n = this.computedArr(+o[this.colorVal].time[0], 15);
+          min  = o[this.colorVal].time[1];
+				}else {
+          return {3: [1,2,3,4],4:[1,3,5,6]}
+        }
 				for(let i=0; i<n.length; i++){
 					if(i==0){
 						otime[n[0]] = this.computedArr(min,60)
@@ -362,35 +361,38 @@
 						otime[n[i]] = this.computedArr(0,60)
 					}
 				}
-				console.log(otime)
 				return otime
 			},
       slots () {
 				var c = this.yuyueTimes;
-				console.log(c)
+        var defaultVal = c[Object.keys(c)[0]];
+				// console.log(c);
+        this.lastSlotVal = Object.keys(c)[0]
+
         var slotsArr = [
           {
             flex: '0 0 10%',
             values: Object.keys(c),
             className: 'slot1',
             textAlign: 'center',
-						defaultIndex: 0,
+						// defaultIndex: 0,
           },{
             divider: true,
             content:'小时',
             className: 'divider-hour'
           }, {
             flex: '0 0 10%',
-            values: this.yuyueTimes[3],
+            values: defaultVal,
             className: 'solt2',
             textAlign: 'center',
-						defaultIndex: 0
+						// defaultIndex: 0
           }, {
             divider: true,
             content: '分钟',
             className: 'divider-min'
           }
         ]
+        console.log(slotsArr)
 				return slotsArr
       },
       colorText () {
@@ -422,6 +424,9 @@
         for(var i= min,index=0; (buffArray[index++]=min++) < max -1;);
         return buffArray
       },
+      lastSlotMethod (arg) {
+       this.lastSlotVal = +arg
+      },
       showLayer (num) {
         if(num !== 2) {
           this.container = num;
@@ -441,9 +446,17 @@
       },
       onValuesChange (picker, values) {
 				console.info('picker:',values)
+        if(!values[0]){
+          values[0] = Object.keys(this.yuyueTimes)[0]
+        }
 				picker.setSlotValues(1, this.yuyueTimes[values[0]]);
+
+        if(values[0] != this.lastSlotVal) {
+          picker.setSlotValue(1, 0);
+          this.lastSlotMethod(values[0]);
+        }
         this.reservaVal = [values[0],values[1]];
-				console.info('picker --', this.reservaVal)
+
       },
       reservation () {
         //预约

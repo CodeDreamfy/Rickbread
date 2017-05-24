@@ -89,7 +89,7 @@
         if($elem.tagName == 'I'){
           $elem = $elem.parentElement;
         }
-        console.log(this._workstatus)
+        // console.log(this._workstatus)
         let menuIndex = $elem.getAttribute('data-type');
         if(this._workstatus == 0 || this._menuState == menuIndex || this._workstatus == 13) {
           this.addClass($event)
@@ -113,6 +113,10 @@
           $(e).find('i').get(0).className = 'iconfont '+ sClass[1];
           $(e).animate({'background':'#fff'}, 200, 'ease-out')
         })
+        //判断如果是待机状态下就不用添加class
+        if(this._workstatus == 0){
+          return false
+        }
         if(arguments.length == 0) {
           $elem = $('.menu-tab-item > a[data-type="'+ this._menuState +'"]');
         }else {
@@ -121,7 +125,7 @@
             $elem = $elem.parentElement;
           }
         }
-        console.log($($elem))
+        // console.log($($elem))
         let $class = $($elem).find('i');
         let arrClassName = $class.attr('class');
         // console.log($elem,$class,arrClassName)
