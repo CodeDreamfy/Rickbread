@@ -16,7 +16,7 @@ const store = new Vuex.Store({
     errorCode: 0,
     msgTypeCode: 0,
     fuctionStatus: 0,
-    color: 2,
+    color: 1,
     weight: 1
   },
   mutations: {

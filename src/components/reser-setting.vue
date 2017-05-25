@@ -6,7 +6,9 @@
           <div class="setting-layer-titile">预约设置</div>
           <div class="setting-layer-container">
             <!--<time-pick></time-pick>-->
-            <mt-picker class="mtpicker-custom" :slots="slots" @change="onValuesChange" :visible-item-count="5" :itemHeight="68" ></mt-picker>
+            <mt-picker class="mtpicker-custom" v-show="colorVal == 1" :slots="slotVal['1']" @change="changePicker" :visible-item-count="5" :itemHeight="68" ></mt-picker>
+            <mt-picker class="mtpicker-custom"  v-show="colorVal == 2"  :slots="slotVal['2']" @change="changePicker" :visible-item-count="5" :itemHeight="68" ></mt-picker>
+            <mt-picker class="mtpicker-custom"  v-show="colorVal == 3"  :slots="slotVal['3']" @change="changePicker" :visible-item-count="5" :itemHeight="68" ></mt-picker>
             <div class="ui-btn primary"><a href="javascript:;" class="btn" @touchend="reservation">启动</a></div>
           </div>
         </div>
@@ -312,18 +314,20 @@
 						yuyue: true
           }
         },
-        lastSlotVal: 3
+        lastSlotVal: 3,
+        slotVal: {},
+        colorPickVal: {},
+        slotPicker: {}
       }
     },
     watch: {
-      colorVal () {
+      colorVal (val, old) {
         let c = document.querySelector('.ui-range .movetips-color');
         let z = ((this.colorVal-1)/2) * 100 + '%'
-         c.style.left = z;
+        c.style.left = z;
       },
       weightVal () {
         let c = document.querySelector('.ui-range .movetips-weight');
-
         let z = ((this.weightVal-1)/2) * 100 + '%'
         c.style.left = z;
       }
@@ -343,57 +347,6 @@
 			}),
       paramId () {
         return this.$route.params.id
-      },
-			yuyueTimes () {
-				let o = this.filterFeatures[this.paramId];
-				let timeArr, otime = {}, n, min;
-
-        if(o.yuyue) {
-					n = this.computedArr(+o[this.colorVal].time[0], 15);
-          min  = o[this.colorVal].time[1];
-				}else {
-          return {3: [1,2,3,4],4:[1,3,5,6]}
-        }
-				for(let i=0; i<n.length; i++){
-					if(i==0){
-						otime[n[0]] = this.computedArr(min,60)
-					}else {
-						otime[n[i]] = this.computedArr(0,60)
-					}
-				}
-				return otime
-			},
-      slots () {
-				var c = this.yuyueTimes;
-        var defaultVal = c[Object.keys(c)[0]];
-				// console.log(c);
-        this.lastSlotVal = Object.keys(c)[0]
-
-        var slotsArr = [
-          {
-            flex: '0 0 10%',
-            values: Object.keys(c),
-            className: 'slot1',
-            textAlign: 'center',
-						// defaultIndex: 0,
-          },{
-            divider: true,
-            content:'小时',
-            className: 'divider-hour'
-          }, {
-            flex: '0 0 10%',
-            values: defaultVal,
-            className: 'solt2',
-            textAlign: 'center',
-						// defaultIndex: 0
-          }, {
-            divider: true,
-            content: '分钟',
-            className: 'divider-min'
-          }
-        ]
-        console.log(slotsArr)
-				return slotsArr
       },
       colorText () {
         switch (this.colorVal) {
@@ -419,6 +372,81 @@
       }
     },
     methods: {
+      getSlotPicker () {
+        var c;
+        switch(+this.colorVal){
+          case 1: c = this.slotVal['0']; break;
+          case 2: c = this.slotVal['1']; break;
+          case 3: c = this.slotVal['2']; break;
+        }
+        return c
+      },
+      getTimePickData () {
+        let o = this.filterFeatures[this.paramId];
+				let timeArr, otime = {}, n, min;
+
+        if(o.yuyue) {
+					n = this.computedArr(+o[this.colorVal].time[0], 15);
+          min  = o[this.colorVal].time[1];
+				}else {
+          return {3: [1,2,3,4],4:[1,3,5,6]}
+        }
+				for(let i=0; i<n.length; i++){
+					if(i==0){
+						otime[n[0]] = this.computedArr(min,60)
+					}else {
+						otime[n[i]] = this.computedArr(0,60)
+					}
+				}
+				return otime
+      },
+      getSlotArr (val) {
+        // console.log('slot',val)
+        let o = this.filterFeatures[this.paramId];
+				let timeArr, otime = {}, n, min;
+
+        if(o.yuyue) {
+					n = this.computedArr(+o[val].time[0], 15);
+          min  = o[val].time[1];
+				}else {
+          return {3: [1,2,3,4],4:[1,3,5,6]}
+        }
+				for(let i=0; i<n.length; i++){
+					if(i==0){
+						otime[n[0]] = this.computedArr(min,60)
+					}else {
+						otime[n[i]] = this.computedArr(0,60)
+					}
+				}
+				// var c = this.yuyueTimes;
+        var c = otime;
+        this.colorPickVal[val] = otime;
+        // console.log(this.colorPickVal)
+        this.lastSlotVal = Object.keys(c)[0]
+        return [
+          {
+            flex: '0 0 10%',
+            values: Object.keys(c),
+            className: 'slot1',
+            textAlign: 'center',
+						// defaultIndex: 0,
+          },{
+            divider: true,
+            content:'小时',
+            className: 'divider-hour'
+          }, {
+            flex: '0 0 10%',
+            values: Object.values(c)[0],
+            className: 'solt2',
+            textAlign: 'center',
+						// defaultIndex: 0
+          }, {
+            divider: true,
+            content: '分钟',
+            className: 'divider-min'
+          }
+        ]
+      },
       computedArr (min, max) {
         var buffArray = [];
         for(var i= min,index=0; (buffArray[index++]=min++) < max -1;);
@@ -430,6 +458,7 @@
       showLayer (num) {
         if(num !== 2) {
           this.container = num;
+          // this.slotPicker = this.getSlotPicker()
         }else {
           if(this.menuList){
             this.container = num;
@@ -444,19 +473,20 @@
           this.container = 0;
         }
       },
-      onValuesChange (picker, values) {
-				console.info('picker:',values)
+      changePicker (picker, values) {
+        var slotArrL = this.colorPickVal[this.colorVal];
         if(!values[0]){
-          values[0] = Object.keys(this.yuyueTimes)[0]
+          values[0] = Object.keys(slotArrL)[0]
         }
-				picker.setSlotValues(1, this.yuyueTimes[values[0]]);
+
+				picker.setSlotValues(1, slotArrL[values[0]]);
 
         if(values[0] != this.lastSlotVal) {
           picker.setSlotValue(1, 0);
           this.lastSlotMethod(values[0]);
         }
         this.reservaVal = [values[0],values[1]];
-
+        console.log(this.reservaVal)
       },
       reservation () {
         //预约
@@ -513,13 +543,22 @@
 				if(!val) return '';
 				if(val == '-') return val+'-';
 				return val >10 ? val : '0'+val
-			}
+			},
+      filterPicker (val,index,slotArr) {
+        return slotArr[index]
+      }
 		},
+    created () {
+      this.slotVal['1'] = this.getSlotArr(1)
+      this.slotVal['2'] = this.getSlotArr(2)
+      this.slotVal['3'] = this.getSlotArr(3)
+    },
     mounted () {
       this.colorVal = this._roasted;
       this.weightVal = this._weights;
       //menuList
 			this.menuList = menuList[this.$route.params.id];
+      this.slotPicker = this.getSlotPicker()
     }
   }
 </script>
