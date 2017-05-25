@@ -94,8 +94,13 @@
         if(this._workstatus == 0 || this._menuState == menuIndex || this._workstatus == 13) {
           this.addClass($event)
           console.log(this._workstatus)
-          this.$router.push({name: 'setting', params: {id: menuIndex}})
+					if(menuIndex == 24){
+						this.$router.push({name: 'diyCode'})
+					}else {
+          	this.$router.push({name: 'setting', params: {id: menuIndex}})
+					}
         }else {
+					
           if(OJS.device.onlineStatus == 1) {
             OJS.app.toast("设备正在进行工作，只能查看当前选中的")
           }else {
