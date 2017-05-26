@@ -235,6 +235,55 @@
         var buffArray = [];
         for(var i= min; buffArray.push(i++) <= max;);
         return buffArray
+      },
+      reservation () {
+        //预约
+        if(this._workstatus == 13) {
+          OJS.app.toast("设备正在预约中")
+          return false
+        }
+        let arr = new Array(11).fill(0);//补充后面11个字节
+        //如果制作时间不存在直接抛出异常
+        if(!this.filterFeatures[this.paramId]){
+          throw "filterFeatures不存在"
+        }
+        let o = this.getArgument();
+        if(this._workstatus == 0 && this._errorCode == 0) {
+          this.sendNotify({...o}, ...arr);
+        }else {
+          this.$store.commit('warnTipShow',true)
+          OJS.app.toast("设备只有在待机状态才能预约成功")
+          return false
+        }
+      },
+      startDevice () {
+        let o = this.getArgument();
+        let arr = new Array(11).fill(0);//补充后面11个字节
+        if(this._workstatus == 0 && this._errorCode == 0) {
+          this.sendNotify({...o}, ...arr);
+        }else {
+          this.$store.commit('warnTipShow',true)
+          OJS.app.toast("设备只有在待机状态才能启动成功");
+        }
+      },
+      //获取参数
+      getArgument () {
+				let obj =  [
+					this.colorVal - 1,
+					this.weightVal - 1,
+					this.reservaVal[0],
+					this.reservaVal[1],
+					+this.filterFeatures[this.paramId][this.colorVal].time[0],
+					+this.filterFeatures[this.paramId][this.colorVal].time[1]
+				]
+        if(this.filterFeatures.color){
+          obj.color = 3
+        }
+        if(this.filterFeatures.weight){
+          obj.weight = 1
+        }
+        console.info('预约下发参数打印:', ...obj);
+        return obj
       }
     },
     filters: {
