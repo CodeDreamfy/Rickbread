@@ -1,10 +1,10 @@
 <template>
   <div class="diycode-wrapper">
     <div class="mask-layer-wrapper diycode-layer" v-show="container"  @touchend.self.prevent="hideLayer($event)">
-        <div class="setting-container-layer" v-show="isType == 'yuyue' ">
+        <div class="setting-container-layer" v-if="isType == 'yuyue' ">
           <div class="setting-layer-titile">预约时间</div>
           <div class="setting-layer-container">
-            <mt-picker class="mtpicker-custom" :slots="slots" @change="onValuesChange" :itemHeight="68"></mt-picker>
+            <mt-picker class="mtpicker-custom" :slots="yuyueSlots" @change="onValuesChange" :itemHeight="68"></mt-picker>
             <div class="ui-btn primary"><a href="javascript:;" class="btn">启动</a></div>
           </div>
         </div>
@@ -86,7 +86,7 @@
             <div class="setting-weight setting-com" v-show="isType == 9">
               <span class="valtxt">0</span>
               <div class="slidebar-wrap ui-range">
-                <input type="range" class="" min=0 step=1 max=60 v-model="vals[9]" >
+                <input type="range" class="" min=0 step=1 max=80 v-model="vals[9]" >
                 <span class="movetips">{{vals[9]}}</span>
               </div>
               <span class="valtxt">80</span>
@@ -171,7 +171,10 @@
         isType: 1,
         vals: [2,15,3,20,10,0,42,40,0,50,60],
         typeTitleArr: ['烧色','搅拌1','醒面1','搅拌2','醒面2','搅拌3','发酵1','发酵2','发酵3','烘烤','保温'],
-        valsMinMax: [[1,3],[0,30],[0,30],[0,30],[0,30],[0,25],[0,60],[0,60],[0,60],[0,80],[0,60]]
+        valsMinMax: [[1,3],[0,30],[0,30],[0,30],[0,30],[0,25],[0,60],[0,60],[0,60],[0,80],[0,60]],
+        yuyueSlots:[],
+        colorPickVal: [],
+        lastSlotVal: 4
       }
     },
     watch: {
@@ -184,34 +187,12 @@
       }
     },
     computed: {
-      slots () {
-        let hourTimeArr = this.computedArr(0,48);
-        let minTimeArr = this.computedArr(0,59);
-        return [
-          {
-            flex: '0 0 10%',
-            values: hourTimeArr,
-            className: 'slot1',
-            textAlign: 'center'
-          },{
-            divider: true,
-            content:'小时',
-            className: 'divider-hour'
-          }, {
-            flex: '0 0 10%',
-            values: minTimeArr,
-            className: 'solt2',
-            textAlign: 'center'
-          }, {
-            divider: true,
-            content: '分钟',
-            className: 'divider-min'
-          }
-        ]
-      }
     },
     methods: {
       movetips () {
+        if(this.isType == 'yuyue'){
+          return false;
+        }
         let c = document.querySelectorAll('.setting-container-layer .movetips')[this.isType];
         let pick = this.valsMinMax[this.isType];
         let z = ((this.vals[this.isType]-pick[0])/(pick[1]-pick[0])) * 100 + '%'
@@ -219,11 +200,31 @@
       },
       onValuesChange (picker, values) {
         // console.log(picker,picker._self.$children)
+        // colorPickVal
+        console.log(values)
+        if(!values[0]){
+          values[0] = Object.keys(this.colorPickVal)[0]
+        }
+
+				picker.setSlotValues(1, this.colorPickVal[values[0]]);
+
+        if(values[0] != this.lastSlotVal) {
+          picker.setSlotValue(1, 0);
+          this.lastSlotVal = values[0];
+        }
+        this.reservaVal = [values[0],values[1]];
+        console.log(this.reservaVal)
       },
       showLayer (index) {
         this.container = true;
         this.isType = index;
-        this.movetips()
+        this.movetips();
+        if(this.isType == 'yuyue'){
+          this.$forceUpdate()
+          // this.$nextTick(()=>{
+            this.slots()
+          // })
+        }
       },
       hideLayer ($) {
         var elem =  $.target.className;
@@ -236,31 +237,78 @@
         for(var i= min; buffArray.push(i++) <= max;);
         return buffArray
       },
+      yuyueMinTime () {
+        //计算预约时间
+        var sumArr = this.vals.reduce((a, c, i) => {
+          return a + c
+        });
+        var yuyueMin = sumArr%60;
+        var yuyueHour = parseInt(sumArr/60);
+        return [yuyueHour, yuyueMin]
+      },
+      slots () {
+        var otime={},n, min;
+        var times = this.yuyueMinTime()
+        n = this.computedArr(times[0], 15);
+        min  = times[1];
+        console.log(times,n)
+				for(let i=0; i<n.length; i++){
+					if(i==0){
+						otime[n[0]] = this.computedArr(min,60)
+					}else {
+						otime[n[i]] = this.computedArr(0,60)
+					}
+				}
+				// var c = this.yuyueTimes;
+        var c = otime;
+        this.lastSlotVal = Object.keys(c)[0]
+        this.colorPickVal = otime;
+        // console.log( this.yuyueSlots, this.colorPickVal)
+        this.yuyueSlots =  [
+          {
+            flex: '0 0 10%',
+            values: Object.keys(c),
+            className: 'slot1',
+            textAlign: 'center',
+						// defaultIndex: 0,
+          },{
+            divider: true,
+            content:'小时',
+            className: 'divider-hour'
+          }, {
+            flex: '0 0 10%',
+            values: Object.values(c)[0],
+            className: 'solt2',
+            textAlign: 'center',
+						// defaultIndex: 0
+          }, {
+            divider: true,
+            content: '分钟',
+            className: 'divider-min'
+          }
+        ]
+      },
       reservation () {
         //预约
         if(this._workstatus == 13) {
           OJS.app.toast("设备正在预约中")
           return false
         }
-        let arr = new Array(11).fill(0);//补充后面11个字节
-        //如果制作时间不存在直接抛出异常
-        if(!this.filterFeatures[this.paramId]){
-          throw "filterFeatures不存在"
-        }
-        let o = this.getArgument();
-        if(this._workstatus == 0 && this._errorCode == 0) {
-          this.sendNotify({...o}, ...arr);
-        }else {
-          this.$store.commit('warnTipShow',true)
-          OJS.app.toast("设备只有在待机状态才能预约成功")
-          return false
-        }
+        var yuyueTime = this.yuyueMinTime()
+
+        let o = this.getArgument(yuyueTime);
+        // if(this._workstatus == 0 && this._errorCode == 0) {
+        //   this.sendNotify(...o);
+        // }else {
+        //   this.$store.commit('warnTipShow',true)
+        //   OJS.app.toast("设备只有在待机状态才能预约成功")
+        //   return false
+        // }
       },
       startDevice () {
         let o = this.getArgument();
-        let arr = new Array(11).fill(0);//补充后面11个字节
         if(this._workstatus == 0 && this._errorCode == 0) {
-          this.sendNotify({...o}, ...arr);
+          this.sendNotify(...o);
         }else {
           this.$store.commit('warnTipShow',true)
           OJS.app.toast("设备只有在待机状态才能启动成功");
@@ -268,20 +316,22 @@
       },
       //获取参数
       getArgument () {
+        let ms = this.vals.slice(1);
+        let val = ms.join('-0-').split('-');
+        let yuyueHour = arguments[0] ? arguments[0][0] : 0;
+        let yuyueMin = arguments[0] ? arguments[0][1] : 0;
+        val.unshift(0);
 				let obj =  [
-					this.colorVal - 1,
-					this.weightVal - 1,
-					this.reservaVal[0],
-					this.reservaVal[1],
-					+this.filterFeatures[this.paramId][this.colorVal].time[0],
-					+this.filterFeatures[this.paramId][this.colorVal].time[1]
+          parseInt(20,16),
+          this.vals[0], //烤色
+          0, //重量
+          0, //果料
+          0, //保留
+          yuyueHour,
+          yuyueMin,
+          ...val,
+          0,0,0,0
 				]
-        if(this.filterFeatures.color){
-          obj.color = 3
-        }
-        if(this.filterFeatures.weight){
-          obj.weight = 1
-        }
         console.info('预约下发参数打印:', ...obj);
         return obj
       }

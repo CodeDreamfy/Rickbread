@@ -501,7 +501,7 @@
         }
         let o = this.getArgument();
         if(this._workstatus == 0 && this._errorCode == 0) {
-          this.sendNotify({...o}, ...arr);
+          this.sendNotify(...o, ...arr);
         }else {
           this.$store.commit('warnTipShow',true)
           OJS.app.toast("设备只有在待机状态才能预约成功")
@@ -512,7 +512,7 @@
         let o = this.getArgument();
         let arr = new Array(11).fill(0);//补充后面11个字节
         if(this._workstatus == 0 && this._errorCode == 0) {
-          this.sendNotify({...o}, ...arr);
+          this.sendNotify(...o, ...arr);
         }else {
           this.$store.commit('warnTipShow',true)
           OJS.app.toast("设备只有在待机状态才能启动成功");
