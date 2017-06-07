@@ -5,7 +5,7 @@
           <div class="setting-layer-titile">预约时间</div>
           <div class="setting-layer-container">
             <mt-picker class="mtpicker-custom" :slots="yuyueSlots" @change="onValuesChange" :itemHeight="68"></mt-picker>
-            <div class="ui-btn primary"><a href="javascript:;" class="btn">启动</a></div>
+            <div class="ui-btn primary"><a href="javascript:;" @touchend="reservation" class="btn">启动</a></div>
           </div>
         </div>
         <div class="setting-container-layer" v-show=" typeof isType == 'number' ">
@@ -153,7 +153,7 @@
           <i class="iconfont icon-reservation"></i>
           <p>预约</p>
         </a>
-        <a href="javascript:;" class="start-btn btnwrap">
+        <a href="javascript:;" class="start-btn btnwrap" @touchend="startDevice">
           <i class="iconfont icon-start"></i>
           <p>启动</p>
         </a>
@@ -297,13 +297,13 @@
         var yuyueTime = this.yuyueMinTime()
 
         let o = this.getArgument(yuyueTime);
-        // if(this._workstatus == 0 && this._errorCode == 0) {
-        //   this.sendNotify(...o);
-        // }else {
-        //   this.$store.commit('warnTipShow',true)
-        //   OJS.app.toast("设备只有在待机状态才能预约成功")
-        //   return false
-        // }
+        if(this._workstatus == 0 && this._errorCode == 0) {
+          this.sendNotify(...o);
+        }else {
+          this.$store.commit('warnTipShow',true)
+          OJS.app.toast("设备只有在待机状态才能预约成功")
+          return false
+        }
       },
       startDevice () {
         let o = this.getArgument();

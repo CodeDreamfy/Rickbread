@@ -37,21 +37,37 @@ const store = new Vuex.Store({
     },
     changeErrLayer () {
 
+    },
+    setnetWork (state, args) {
+      state.netWork = args
+    },
+    setworkStatus (state, args) {
+      state.workStatus = args
+    },
+    setfuctionStatus (state, args) {
+      state.fuctionStatus = args
+    },
+    setcolor (state, args) {
+      state.color = args
+    },
+    setweight (state, args) {
+      state.weight = args
+    },
+    setsensor (state, obj) {
+      state.sensor = obj
     }
   },
   actions: {
     changeStore ({state, dispatch, commit}, obj) {
-      state.netWork = OJS.device.onlineStatus // 网络状态
-      // console.log('dispatch OBJ message:',obj);
-      // state.workStatus = 2
+      commit('setnetWork', OJS.device.onlineStatus)   // 网络状态
+
       if (obj) {
-        // console.dir("chufa")
-        state.workStatus = obj.WorkStatus
-        state.fuctionStatus = obj.FuctionStatus
-        state.color = obj.Color
-        state.weight = obj.Weight
+        commit('workStatus', obj.WorkStatus)
+        commit('fuctionStatus', obj.FuctionStatus)
+        commit('color', obj.Color)
+        commit('weight', obj.Weight)
         dispatch('errorOverlay', obj.Error)
-        state.sensor = obj
+        commit('setsensor', obj)
         dispatch('menuChange', obj.WFID)
         dispatch('workTime')
         commit('msgType', obj)
@@ -60,11 +76,12 @@ const store = new Vuex.Store({
     errorOverlay ({ state }, errCode) {
       // console.info(errCode)
       state.errorCode = errCode
-      if (errCode !== 0) {
+      if (errCode != 0) {
         state.warnTips = true
       } else {
         state.warnTips = false
       }
+      console.info('state.errorCode', state.errorCode, state.warnTips)
     }
   },
   getters: {
@@ -82,12 +99,14 @@ const store = new Vuex.Store({
         state: false,
         msg: '正常'
       }
-      if (errorCode !== 0) {
+      if (errorCode != 0) {
         warnTips = true
         o = {
           state: true,
           msg: aErr[errorCode]
         }
+      }else {
+        warnTips = true
       }
       return o
     },

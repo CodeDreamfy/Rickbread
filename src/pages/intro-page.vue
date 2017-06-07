@@ -47,10 +47,11 @@
 
 <script>
 	import { mapState } from 'vuex'
+  import { mapGetters } from 'vuex'
   export default {
 		data () {
 			return {
-				
+
 			}
 		},
 		methods: {
@@ -97,13 +98,15 @@
 		computed: {
 			...mapState({
 				_menuState: state=>state.indexModule.menuState,
-				_warningState: (state,getters)=>getters.warningState,
-				_msgType: (state,getters)=>getters.msgType,
 				_workstatus: 'workStatus',
 				_workTime: state=>state.indexModule.workTime,
 				_network: 'netWork',
-				_isPause: (state,getters)=>getters.isPause
 			}),
+      ...mapGetters({
+        _warningState: 'warningState',
+        _isPause: 'isPause',
+        _msgType: 'msgType'
+      }),
 			workState () {
 				// console.log(this._workstatus)
 				let status = [
